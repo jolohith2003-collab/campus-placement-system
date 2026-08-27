@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login - Campus Placement System</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0d6efd, #6610f2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .login-header {
+            background: #0d6efd;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .login-header h2 {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .login-body {
+            padding: 30px;
+        }
+
+        .form-control {
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .login-btn {
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .back-link {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card shadow-lg login-card">
+
+        <!-- Header -->
+        <div class="login-header">
+            <h2>Admin Login</h2>
+            <p class="mb-0">Campus Placement System</p>
+        </div>
+
+        <!-- Body -->
+        <div class="login-body">
+
+            <form method="POST" action="/admin-login">
+
+                <!-- Username -->
+                <div class="mb-3">
+                    <label for="username" class="form-label">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        class="form-control"
+                        placeholder="Enter admin username"
+                        required
+                    >
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label for="password" class="form-label">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Enter password"
+                        required
+                    >
+                </div>
+
+                <!-- Login Button -->
+                <button
+                    type="submit"
+                    class="btn btn-primary w-100 login-btn"
+                >
+                    Login
+                </button>
+
+            </form>
+
+            <!-- Back to Home -->
+            <div class="text-center mt-4">
+
+                <a href="/" class="back-link">
+                    ← Back to Home
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

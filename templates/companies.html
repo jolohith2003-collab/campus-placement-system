@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Companies - Campus Placement System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <div class="logo">
+                Campus Placement System
+            </div>
+
+            <a href="{{ url_for('student_dashboard') }}"
+               class="nav-link">
+                Dashboard
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN CONTENT -->
+
+    <div class="container">
+
+        <h1>Placement Companies</h1>
+
+        <p>
+            Companies currently available for campus placement.
+        </p>
+
+
+        {% if companies %}
+
+        <div class="company-grid">
+
+            {% for company in companies %}
+
+            <div class="company-card">
+
+                <h2>
+                    {{ company.company_name }}
+                </h2>
+
+
+                <p>
+                    <strong>Job Role:</strong>
+                    {{ company.job_role }}
+                </p>
+
+
+                <p>
+                    <strong>Salary / Package:</strong>
+                    {{ company.salary }}
+                </p>
+
+
+                <p>
+                    <strong>Minimum CGPA:</strong>
+                    {{ company.min_cgpa or "Not specified" }}
+                </p>
+
+
+                <p>
+                    <strong>Eligible Department:</strong>
+                    {{ company.eligible_department or "All Departments" }}
+                </p>
+
+
+                <p>
+                    <strong>Eligible Year:</strong>
+                    {{ company.eligible_year or "All Years" }}
+                </p>
+
+
+                <p>
+                    <strong>Application Deadline:</strong>
+                    {{ company.deadline or "Not specified" }}
+                </p>
+
+
+                {% if company.description %}
+
+                <p>
+                    <strong>Description:</strong><br>
+                    {{ company.description }}
+                </p>
+
+                {% endif %}
+
+
+                <!-- APPLY BUTTON -->
+
+                <form
+                    action="{{ url_for('apply_company', company_id=company.id) }}"
+                    method="POST"
+                >
+
+                    <button
+                        type="submit"
+                        class="apply-btn"
+                    >
+                        Apply Now
+                    </button>
+
+                </form>
+
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        {% else %}
+
+        <div class="empty-message">
+
+            <h2>No Companies Available</h2>
+
+            <p>
+                No placement companies have been added yet.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+
+        <br>
+
+
+        <a href="{{ url_for('student_dashboard') }}"
+           class="btn">
+
+            ← Back to Dashboard
+
+        </a>
+
+    </div>
+
+</body>
+
+</html>

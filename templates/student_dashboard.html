@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            background: #2563eb;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            background: #1d4ed8;
+            padding: 10px 18px;
+            border-radius: 7px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .welcome {
+            margin-bottom: 25px;
+        }
+
+        .welcome h1 {
+            color: #1d4ed8;
+            margin-bottom: 5px;
+        }
+
+        .welcome p {
+            color: #666;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .profile-card h2 {
+            margin-top: 0;
+            color: #1d4ed8;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .profile-item {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .profile-item strong {
+            display: block;
+            color: #555;
+            margin-bottom: 6px;
+        }
+
+        .profile-item span {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .action-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .action-card h3 {
+            color: #1d4ed8;
+        }
+
+        .action-card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 18px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .action-card a:hover {
+            background: #1d4ed8;
+        }
+
+        @media (max-width: 700px) {
+
+            .profile-grid,
+            .actions {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                padding: 15px 4%;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+    <h2>
+        Campus Placement System
+    </h2>
+
+    <a
+        href="{{ url_for('student_logout') }}"
+        class="logout"
+    >
+        Logout
+    </a>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <!-- WELCOME -->
+
+    <div class="welcome">
+
+        <h1>
+            Welcome, {{ student.name }} 👋
+        </h1>
+
+        <p>
+            Welcome to your student placement dashboard.
+        </p>
+
+    </div>
+
+
+    <!-- PROFILE -->
+
+    <div class="profile-card">
+
+        <h2>
+            👨‍🎓 My Profile
+        </h2>
+
+
+        <div class="profile-grid">
+
+
+            <div class="profile-item">
+
+                <strong>
+                    Name
+                </strong>
+
+                <span>
+                    {{ student.name }}
+                </span>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <strong>
+                    Register Number
+                </strong>
+
+                <span>
+                    {{ student.register_no }}
+                </span>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <strong>
+                    Email
+                </strong>
+
+                <span>
+                    {{ student.email }}
+                </span>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <strong>
+                    Phone
+                </strong>
+
+                <span>
+                    {{ student.phone }}
+                </span>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <strong>
+                    Department
+                </strong>
+
+                <span>
+                    {{ student.department }}
+                </span>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <strong>
+                    Year
+                </strong>
+
+                <span>
+                    {{ student.year }}
+                </span>
+
+            </div>
+
+
+            {% if student.cgpa is defined %}
+
+            <div class="profile-item">
+
+                <strong>
+                    CGPA
+                </strong>
+
+                <span>
+                    {{ student.cgpa }}
+                </span>
+
+            </div>
+
+            {% endif %}
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="actions">
+
+
+        <div class="action-card">
+
+            <h3>
+                🏢 Companies
+            </h3>
+
+            <p>
+                View available placement companies.
+            </p>
+
+            <a href="{{ url_for('companies') }}">
+                View Companies
+            </a>
+
+        </div>
+
+
+        <div class="action-card">
+
+            <h3>
+                📋 My Applications
+            </h3>
+
+            <p>
+                Track your placement applications.
+            </p>
+
+            <a href="{{ url_for('my_applications') }}">
+                View Applications
+            </a>
+
+        </div>
+
+
+        <div class="action-card">
+
+            <h3>
+                🚪 Logout
+            </h3>
+
+            <p>
+                Logout from your student account.
+            </p>
+
+            <a href="{{ url_for('student_logout') }}">
+                Logout
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

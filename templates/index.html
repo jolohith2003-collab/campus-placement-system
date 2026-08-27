@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Campus Placement Requirement System</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="/">
+            Campus Placement System
+        </a>
+
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/student-login">Student</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin-login">Admin</a>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+
+<section class="hero">
+
+    <div class="container text-center">
+
+        <h1>Campus Placement Requirement System</h1>
+
+        <p>
+            Manage Students, Companies, Placement Drives and Recruitments
+            from one platform.
+        </p>
+
+        <a href="/student-login" class="btn btn-primary btn-lg">
+            Student Login
+        </a>
+
+        <a href="/admin-login" class="btn btn-dark btn-lg">
+            Admin Login
+        </a>
+
+    </div>
+
+</section>
+<section class="container py-5">
+
+    <h2 class="text-center mb-5">System Features</h2>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <h4>🎓 Student Portal</h4>
+                    <p>Register, upload resume, apply for jobs and track placement status.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <h4>🏢 Company Portal</h4>
+                    <p>Post jobs, shortlist students and manage interviews.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <h4>👨‍💼 Admin Panel</h4>
+                    <p>Manage students, companies, placement drives and reports.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

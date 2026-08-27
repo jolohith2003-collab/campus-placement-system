@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student Management - Campus Placement System</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        .navbar {
+            background: #2563eb;
+            color: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            background: #1d4ed8;
+            padding: 10px 16px;
+            border-radius: 7px;
+        }
+
+        .navbar a:hover {
+            background: #1e40af;
+        }
+
+        /* =========================
+           CONTAINER
+        ========================== */
+
+        .container {
+            width: 92%;
+            max-width: 1400px;
+            margin: 40px auto;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+            color: #1d4ed8;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           FLASH MESSAGE
+        ========================== */
+
+        .flash {
+            padding: 14px 18px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* =========================
+           SEARCH
+        ========================== */
+
+        .search-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .search-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .search-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .clear-btn {
+            background: #6b7280;
+            color: white;
+            text-decoration: none;
+            padding: 12px 22px;
+            border-radius: 7px;
+            display: inline-block;
+        }
+
+        .clear-btn:hover {
+            background: #4b5563;
+        }
+
+        /* =========================
+           TABLE
+        ========================== */
+
+        .table-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1050px;
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+            padding: 14px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: middle;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        /* =========================
+           STUDENT NAME
+        ========================== */
+
+        .student-name {
+            font-weight: bold;
+            color: #1d4ed8;
+        }
+
+        .student-id {
+            color: #777;
+            font-size: 13px;
+            margin-top: 3px;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================== */
+
+        .action-buttons {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .view-btn,
+        .edit-btn,
+        .delete-btn {
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        /* View */
+
+        .view-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .view-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* Edit */
+
+        .edit-btn {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #d97706;
+        }
+
+        /* Delete */
+
+        .delete-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #b91c1c;
+        }
+
+        /* =========================
+           EMPTY
+        ========================== */
+
+        .empty {
+            background: white;
+            padding: 50px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .empty h2 {
+            color: #555;
+        }
+
+        .empty p {
+            color: #777;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================== */
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            background: #6b7280;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 7px;
+        }
+
+        .back-btn:hover {
+            background: #4b5563;
+        }
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 15px 4%;
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .navbar-links {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .container {
+                width: 95%;
+                margin: 25px auto;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-btn,
+            .clear-btn {
+                text-align: center;
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================== -->
+
+<div class="navbar">
+
+    <h2>
+        Campus Placement System - Admin
+    </h2>
+
+    <div class="navbar-links">
+
+        <a href="{{ url_for('admin_dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('admin_logout') }}">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MAIN CONTENT
+========================== -->
+
+<div class="container">
+
+
+    <h1>
+        👨‍🎓 Student Management
+    </h1>
+
+    <p class="subtitle">
+        View, search, edit and manage registered students.
+    </p>
+
+
+    <!-- =========================
+         FLASH MESSAGES
+    ========================== -->
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+
+        {% if messages %}
+
+            {% for category, message in messages %}
+
+                <div class="flash {{ category }}">
+                    {{ message }}
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+
+
+    <!-- =========================
+         SEARCH
+    ========================== -->
+
+    <div class="search-card">
+
+        <form
+            method="GET"
+            action="{{ url_for('student_management') }}"
+            class="search-box"
+        >
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search or '' }}"
+                placeholder="Search by name, register number, email or department..."
+            >
+
+            <button
+                type="submit"
+                class="search-btn"
+            >
+                🔍 Search
+            </button>
+
+            {% if search %}
+
+                <a
+                    href="{{ url_for('student_management') }}"
+                    class="clear-btn"
+                >
+                    Clear
+                </a>
+
+            {% endif %}
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================
+         STUDENT TABLE
+    ========================== -->
+
+    {% if students %}
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Student
+                        </th>
+
+                        <th>
+                            Register No
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Phone
+                        </th>
+
+                        <th>
+                            Department
+                        </th>
+
+                        <th>
+                            Year
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for student in students %}
+
+                    <tr>
+
+                        <!-- ID -->
+
+                        <td>
+                            {{ student.id }}
+                        </td>
+
+
+                        <!-- NAME -->
+
+                        <td>
+
+                            <div class="student-name">
+                                {{ student.name }}
+                            </div>
+
+                            <div class="student-id">
+                                Student ID: {{ student.id }}
+                            </div>
+
+                        </td>
+
+
+                        <!-- REGISTER NUMBER -->
+
+                        <td>
+                            {{ student.register_no }}
+                        </td>
+
+
+                        <!-- EMAIL -->
+
+                        <td>
+                            {{ student.email }}
+                        </td>
+
+
+                        <!-- PHONE -->
+
+                        <td>
+                            {{ student.phone }}
+                        </td>
+
+
+                        <!-- DEPARTMENT -->
+
+                        <td>
+                            {{ student.department }}
+                        </td>
+
+
+                        <!-- YEAR -->
+
+                        <td>
+                            {{ student.year }}
+                        </td>
+
+
+                        <!-- ACTION -->
+
+                        <td>
+
+                            <div class="action-buttons">
+
+
+                                <!-- VIEW PROFILE -->
+
+                                <a
+                                    href="{{ url_for('student_profile', student_id=student.id) }}"
+                                    class="view-btn"
+                                >
+                                    👁 View
+                                </a>
+
+
+                                <!-- EDIT -->
+
+                                <a
+                                    href="{{ url_for('edit_student', student_id=student.id) }}"
+                                    class="edit-btn"
+                                >
+                                    ✏️ Edit
+                                </a>
+
+
+                                <!-- DELETE -->
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for('delete_student', student_id=student.id) }}"
+                                    style="display:inline;"
+                                    onsubmit="return confirm('Are you sure you want to delete {{ student.name }}? This will also delete this student\\'s applications.');"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="delete-btn"
+                                    >
+                                        🗑 Delete
+                                    </button>
+
+                                </form>
+
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    {% else %}
+
+
+        <!-- =========================
+             NO STUDENTS
+        ========================== -->
+
+        <div class="empty">
+
+            <h2>
+                {% if search %}
+                    No Students Found
+                {% else %}
+                    No Students Registered
+                {% endif %}
+            </h2>
+
+            <p>
+
+                {% if search %}
+
+                    No students match your search:
+                    <strong>{{ search }}</strong>
+
+                {% else %}
+
+                    No students have registered in the placement system yet.
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+
+    <!-- BACK -->
+
+    <a
+        href="{{ url_for('admin_dashboard') }}"
+        class="back-btn"
+    >
+        ← Back to Dashboard
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>
