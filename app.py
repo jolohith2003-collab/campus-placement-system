@@ -8,6 +8,9 @@ from flask import (
     flash
 )
 
+import os
+from urllib.parse import urlparse, unquote
+
 import mysql.connector
 
 
@@ -17,7 +20,7 @@ import mysql.connector
 
 app = Flask(__name__)
 
-app.secret_key = "campus_placement_secret_key"
+app.secret_key = os.getenv("SECRET_KEY", "campus_placement_secret_key")
 
 
 # =========================================================
@@ -25,14 +28,41 @@ app.secret_key = "campus_placement_secret_key"
 # =========================================================
 
 def get_db_connection():
+    """
+    Create a fresh MySQL connection for each request.
 
-    return mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="campus_placement_db"
+    For Vercel, set MYSQL_PUBLIC_URL (recommended) or the DB_*
+    environment variables. Do not use localhost for the deployed
+    application when the database is on Railway.
+    """
+
+    mysql_url = (
+        os.getenv("MYSQL_PUBLIC_URL")
+        or os.getenv("MYSQL_URL")
+        or os.getenv("DATABASE_URL")
     )
 
+    if mysql_url:
+        url = urlparse(mysql_url)
+
+        if not url.hostname:
+            raise ValueError("Invalid MySQL URL: missing hostname")
+
+        return mysql.connector.connect(
+            host=url.hostname,
+            port=url.port or 3306,
+            user=unquote(url.username or ""),
+            password=unquote(url.password or ""),
+            database=(url.path or "").lstrip("/"),
+        )
+
+    return mysql.connector.connect(
+        host=os.getenv("DB_HOST", "localhost"),
+        port=int(os.getenv("DB_PORT", "3306")),
+        user=os.getenv("DB_USER", "root"),
+        password=os.getenv("DB_PASSWORD", ""),
+        database=os.getenv("DB_NAME", "campus_placement_db"),
+    )
 
 # =========================================================
 # HOME
@@ -1885,7 +1915,10 @@ def admin_logout():
 # =========================================================
 
 if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
 
     app.run(
+        host="0.0.0.0",
+        port=port,
         debug=True
     )
