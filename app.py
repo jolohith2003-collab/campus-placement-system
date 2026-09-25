@@ -28,11 +28,11 @@ app.secret_key = "campus_placement_secret_key"
 def get_db_connection():
 
     return mysql.connector.connect(
-        host=os.getenv("MYSQLHOST"),
+        host=os.getenv("MYSQLHOST", "localhost"),
         port=int(os.getenv("MYSQLPORT", "3306")),
-        user=os.getenv("MYSQLUSER"),
-        password=os.getenv("MYSQLPASSWORD"),
-        database=os.getenv("MYSQLDATABASE")
+        user=os.getenv("MYSQLUSER", "root"),
+        password=os.getenv("MYSQLPASSWORD", ""),
+        database=os.getenv("MYSQLDATABASE", "campus_placement_db")
     )
 
 
@@ -191,6 +191,7 @@ def student_register():
                 """
                 INSERT INTO students
                 (
+                    full_name,
                     name,
                     register_no,
                     email,
@@ -200,9 +201,10 @@ def student_register():
                     password
                 )
                 VALUES
-                (%s, %s, %s, %s, %s, %s, %s)
+                (%s, %s, %s, %s, %s, %s, %s, %s)
                 """,
                 (
+                    name,
                     name,
                     register_no,
                     email,
@@ -1565,6 +1567,7 @@ def edit_student(student_id):
                 UPDATE students
 
                 SET
+                    full_name = %s,
                     name = %s,
                     email = %s,
                     phone = %s,
@@ -1574,6 +1577,7 @@ def edit_student(student_id):
                 WHERE id = %s
                 """,
                 (
+                    name,
                     name,
                     email,
                     phone,
