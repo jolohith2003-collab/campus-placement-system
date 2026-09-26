@@ -1,47 +1,712 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Campus Placement Requirement System</title>
+    <title>Campus Placement 3D</title>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    <style>
+
+        /* =========================================
+           GLOBAL
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(37, 99, 235, 0.18),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 80% 70%,
+                    rgba(124, 58, 237, 0.18),
+                    transparent 30%
+                ),
+                #050816;
+
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+
+        /* =========================================
+           3D BACKGROUND
+        ========================================= */
+
+        .scene {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(2px);
+            opacity: 0.55;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb-one {
+            width: 260px;
+            height: 260px;
+            background: #2563eb;
+            top: 15%;
+            left: 5%;
+            box-shadow:
+                0 0 80px rgba(37, 99, 235, 0.7);
+        }
+
+        .orb-two {
+            width: 220px;
+            height: 220px;
+            background: #7c3aed;
+            right: 8%;
+            top: 25%;
+            animation-delay: -3s;
+            box-shadow:
+                0 0 80px rgba(124, 58, 237, 0.7);
+        }
+
+        .orb-three {
+            width: 160px;
+            height: 160px;
+            background: #06b6d4;
+            bottom: 10%;
+            left: 45%;
+            animation-delay: -5s;
+            box-shadow:
+                0 0 70px rgba(6, 182, 212, 0.6);
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0);
+            }
+
+            50% {
+                transform: translate3d(0, -35px, 20px);
+            }
+        }
+
+
+        /* =========================================
+           NAVBAR
+        ========================================= */
+
+        .navbar-3d {
+            position: relative;
+            z-index: 10;
+            margin: 20px;
+            padding: 12px 20px;
+
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(20px);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.35);
+
+            transform:
+                perspective(1000px)
+                rotateX(1deg);
+        }
+
+        .brand-3d {
+            color: white !important;
+            font-size: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.75) !important;
+            margin-left: 10px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .hero-3d {
+            position: relative;
+            z-index: 2;
+
+            min-height: 720px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 100px 20px 80px;
+
+            perspective: 1200px;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+
+            transform-style: preserve-3d;
+
+            animation: heroFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+
+            0%,
+            100% {
+                transform:
+                    translateY(0)
+                    rotateX(0deg);
+            }
+
+            50% {
+                transform:
+                    translateY(-10px)
+                    rotateX(1deg);
+            }
+        }
+
+        .hero-badge {
+            display: inline-block;
+
+            padding: 10px 20px;
+            margin-bottom: 25px;
+
+            border-radius: 50px;
+
+            background: rgba(37, 99, 235, 0.15);
+            border: 1px solid rgba(96, 165, 250, 0.35);
+
+            color: #93c5fd;
+
+            box-shadow:
+                0 10px 30px rgba(37, 99, 235, 0.2);
+
+            transform:
+                translateZ(40px);
+        }
+
+        .hero-title {
+            font-size: clamp(45px, 7vw, 85px);
+            line-height: 1;
+            font-weight: 800;
+
+            margin-bottom: 25px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #60a5fa,
+                    #a78bfa,
+                    #ffffff
+                );
+
+            background-size: 300% auto;
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+
+            animation: gradientMove 6s linear infinite;
+
+            text-shadow:
+                0 20px 50px rgba(37, 99, 235, 0.25);
+
+            transform:
+                translateZ(80px);
+        }
+
+        @keyframes gradientMove {
+
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 300% center;
+            }
+        }
+
+        .hero-description {
+            max-width: 700px;
+            margin: auto;
+
+            color: rgba(255, 255, 255, 0.65);
+
+            font-size: 19px;
+            line-height: 1.8;
+
+            transform:
+                translateZ(50px);
+        }
+
+
+        /* =========================================
+           BUTTONS
+        ========================================= */
+
+        .button-area {
+            margin-top: 40px;
+
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+
+            flex-wrap: wrap;
+
+            transform:
+                translateZ(70px);
+        }
+
+        .btn-3d {
+            position: relative;
+
+            padding: 15px 30px;
+
+            border-radius: 14px;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            text-decoration: none;
+
+            transition: 0.25s;
+
+            transform-style: preserve-3d;
+        }
+
+        .btn-primary-3d {
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 12px 0 #172554,
+                0 25px 45px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-primary-3d:hover {
+            color: white;
+
+            transform:
+                translateY(-7px)
+                translateZ(20px);
+
+            box-shadow:
+                0 18px 0 #172554,
+                0 35px 55px rgba(37, 99, 235, 0.45);
+        }
+
+        .btn-secondary-3d {
+            color: white;
+
+            background: rgba(255, 255, 255, 0.07);
+
+            border: 1px solid rgba(255, 255, 255, 0.2);
+
+            box-shadow:
+                0 12px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-secondary-3d:hover {
+            color: white;
+
+            background: rgba(255, 255, 255, 0.13);
+
+            transform:
+                translateY(-6px)
+                translateZ(15px);
+        }
+
+
+        /* =========================================
+           3D FLOATING PANEL
+        ========================================= */
+
+        .floating-panel {
+            position: absolute;
+
+            width: 230px;
+            height: 150px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.13),
+                    rgba(255, 255, 255, 0.03)
+                );
+
+            backdrop-filter: blur(15px);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.16);
+
+            box-shadow:
+                0 30px 70px rgba(0, 0, 0, 0.35);
+
+            padding: 20px;
+
+            transform-style: preserve-3d;
+
+            animation:
+                panelFloat 7s ease-in-out infinite;
+        }
+
+        .panel-left {
+            left: 5%;
+            top: 35%;
+            transform:
+                rotateY(20deg)
+                rotateX(8deg);
+        }
+
+        .panel-right {
+            right: 5%;
+            top: 48%;
+            transform:
+                rotateY(-20deg)
+                rotateX(8deg);
+
+            animation-delay: -3s;
+        }
+
+        .floating-icon {
+            font-size: 35px;
+            margin-bottom: 12px;
+        }
+
+        .floating-title {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .floating-text {
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        @keyframes panelFloat {
+
+            0%,
+            100% {
+                margin-top: 0;
+            }
+
+            50% {
+                margin-top: -25px;
+            }
+        }
+
+
+        /* =========================================
+           FEATURES
+        ========================================= */
+
+        .features-section {
+            position: relative;
+            z-index: 2;
+
+            padding: 100px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+
+            font-size: 45px;
+            font-weight: 800;
+
+            margin-bottom: 15px;
+        }
+
+        .section-description {
+            text-align: center;
+
+            color: rgba(255, 255, 255, 0.55);
+
+            max-width: 600px;
+
+            margin:
+                0 auto 60px;
+        }
+
+        .feature-card {
+            height: 100%;
+
+            padding: 35px 28px;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.11),
+                    rgba(255, 255, 255, 0.035)
+                );
+
+            border:
+                1px solid rgba(255, 255, 255, 0.12);
+
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.3);
+
+            transform-style: preserve-3d;
+
+            transition:
+                transform 0.4s ease,
+                box-shadow 0.4s ease;
+
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform:
+                perspective(1000px)
+                rotateX(6deg)
+                rotateY(-6deg)
+                translateY(-15px);
+
+            box-shadow:
+                0 40px 80px rgba(37, 99, 235, 0.22);
+        }
+
+        .feature-icon {
+            width: 75px;
+            height: 75px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 25px;
+
+            border-radius: 20px;
+
+            font-size: 35px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(37, 99, 235, 0.3),
+                    rgba(124, 58, 237, 0.3)
+                );
+
+            border:
+                1px solid rgba(255, 255, 255, 0.15);
+
+            box-shadow:
+                0 15px 30px rgba(0, 0, 0, 0.25);
+
+            transform:
+                translateZ(30px);
+        }
+
+        .feature-card h4 {
+            font-size: 23px;
+            font-weight: 700;
+
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.58);
+
+            line-height: 1.7;
+
+            margin: 0;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        .footer-3d {
+            position: relative;
+            z-index: 2;
+
+            padding: 40px 20px;
+
+            text-align: center;
+
+            border-top:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 900px) {
+
+            .floating-panel {
+                display: none;
+            }
+
+            .hero-3d {
+                min-height: 650px;
+            }
+
+        }
+
+        @media (max-width: 576px) {
+
+            .navbar-3d {
+                margin: 10px;
+            }
+
+            .hero-title {
+                font-size: 48px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 35px;
+            }
+
+            .button-area {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-3d {
+                width: 90%;
+                text-align: center;
+            }
+        }
+
+    </style>
 </head>
+
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<!-- =========================================
+     3D BACKGROUND
+========================================= -->
+
+<div class="scene">
+
+    <div class="orb orb-one"></div>
+
+    <div class="orb orb-two"></div>
+
+    <div class="orb orb-three"></div>
+
+</div>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<nav class="navbar navbar-expand-lg navbar-3d">
+
     <div class="container">
 
-        <a class="navbar-brand fw-bold" href="/">
-            Campus Placement System
+        <a
+            class="navbar-brand fw-bold brand-3d"
+            href="/"
+        >
+            🎓 Campus Placement
         </a>
 
-        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
 
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#menu"
+        >
             <span class="navbar-toggler-icon"></span>
-
         </button>
 
-        <div class="collapse navbar-collapse" id="menu">
+
+        <div
+            class="collapse navbar-collapse"
+            id="menu"
+        >
 
             <ul class="navbar-nav ms-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
+                    <a
+                        class="nav-link"
+                        href="/"
+                    >
+                        Home
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/student-login">Student</a>
+                    <a
+                        class="nav-link"
+                        href="/student-login"
+                    >
+                        Student
+                    </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin-login">Admin</a>
+                    <a
+                        class="nav-link"
+                        href="/admin-login"
+                    >
+                        Admin
+                    </a>
                 </li>
 
             </ul>
@@ -49,61 +714,95 @@
         </div>
 
     </div>
+
 </nav>
 
-<section class="hero">
 
-    <div class="container text-center">
+<!-- =========================================
+     HERO
+========================================= -->
 
-        <h1>Campus Placement Requirement System</h1>
+<section class="hero-3d">
 
-        <p>
-            Manage Students, Companies, Placement Drives and Recruitments
-            from one platform.
+    <!-- LEFT FLOATING CARD -->
+
+    <div class="floating-panel panel-left">
+
+        <div class="floating-icon">
+            🎓
+        </div>
+
+        <div class="floating-title">
+            Student Portal
+        </div>
+
+        <div class="floating-text">
+            Manage your placement journey
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT FLOATING CARD -->
+
+    <div class="floating-panel panel-right">
+
+        <div class="floating-icon">
+            🏢
+        </div>
+
+        <div class="floating-title">
+            Companies
+        </div>
+
+        <div class="floating-text">
+            Discover placement opportunities
+        </div>
+
+    </div>
+
+
+    <!-- HERO CONTENT -->
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            🚀 Smart Campus Placement Platform
+        </div>
+
+
+        <h1 class="hero-title">
+            Campus Placement
+            <br>
+            Requirement System
+        </h1>
+
+
+        <p class="hero-description">
+
+            Manage students, companies, placement drives,
+            applications and recruitment from one modern platform.
+
         </p>
 
-        <a href="/student-login" class="btn btn-primary btn-lg">
-            Student Login
-        </a>
 
-        <a href="/admin-login" class="btn btn-dark btn-lg">
-            Admin Login
-        </a>
+        <div class="button-area">
 
-    </div>
+            <a
+                href="/student-login"
+                class="btn-3d btn-primary-3d"
+            >
+                🎓 Student Login
+            </a>
 
-</section>
-<section class="container py-5">
 
-    <h2 class="text-center mb-5">System Features</h2>
+            <a
+                href="/admin-login"
+                class="btn-3d btn-secondary-3d"
+            >
+                🔐 Admin Login
+            </a>
 
-    <div class="row">
-
-        <div class="col-md-4 mb-4">
-            <div class="card shadow h-100">
-                <div class="card-body text-center">
-                    <h4>🎓 Student Portal</h4>
-                    <p>Register, upload resume, apply for jobs and track placement status.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card shadow h-100">
-                <div class="card-body text-center">
-                    <h4>🏢 Company Portal</h4>
-                    <p>Post jobs, shortlist students and manage interviews.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-4">
-            <div class="card shadow h-100">
-                <div class="card-body text-center">
-                    <h4>👨‍💼 Admin Panel</h4>
-                    <p>Manage students, companies, placement drives and reports.</p>
-                </div>
-            </div>
         </div>
 
     </div>
@@ -111,8 +810,163 @@
 </section>
 
 
+<!-- =========================================
+     FEATURES
+========================================= -->
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+<section class="features-section">
+
+    <div class="container">
+
+        <h2 class="section-title">
+            Everything You Need
+        </h2>
+
+        <p class="section-description">
+
+            A centralized platform designed to simplify
+            campus placement management.
+
+        </p>
+
+
+        <div class="row g-4">
+
+
+            <!-- STUDENT -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        🎓
+                    </div>
+
+                    <h4>
+                        Student Portal
+                    </h4>
+
+                    <p>
+                        Register your profile, manage your
+                        information, view companies, apply for
+                        jobs and track placement status.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMPANY -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        🏢
+                    </div>
+
+                    <h4>
+                        Company Management
+                    </h4>
+
+                    <p>
+                        Manage company information,
+                        placement opportunities and
+                        recruitment requirements.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- ADMIN -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="feature-card">
+
+                    <div class="feature-icon">
+                        👨‍💼
+                    </div>
+
+                    <h4>
+                        Admin Panel
+                    </h4>
+
+                    <p>
+                        Manage students, companies,
+                        applications, placement drives
+                        and recruitment information.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer class="footer-3d">
+
+    <p class="mb-0">
+        © 2026 Campus Placement Requirement System
+    </p>
+
+</footer>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<!-- =========================================
+     MOUSE 3D EFFECT
+========================================= -->
+
+<script>
+
+    const hero = document.querySelector(".hero-content");
+
+    document.addEventListener("mousemove", (event) => {
+
+        if (!hero) return;
+
+        const x =
+            (window.innerWidth / 2 - event.clientX) / 60;
+
+        const y =
+            (window.innerHeight / 2 - event.clientY) / 60;
+
+        hero.style.transform =
+            `rotateY(${x}deg) rotateX(${y}deg)`;
+
+    });
+
+
+    document.addEventListener("mouseleave", () => {
+
+        if (!hero) return;
+
+        hero.style.transform =
+            "rotateY(0deg) rotateX(0deg)";
+
+    });
+
+</script>
 
 </body>
+
 </html>

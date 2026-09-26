@@ -2,369 +2,978 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Student Dashboard</title>
+    <title>Student Dashboard - Campus Placement</title>
 
     <style>
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #222;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+            overflow-x: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 10% 15%,
+                    rgba(37, 99, 235, .30),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(124, 58, 237, .30),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(6, 182, 212, .18),
+                    transparent 32%
+                ),
+                #030712;
         }
 
-        .navbar {
+        /* =================================
+           BACKGROUND
+        ================================= */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(5px);
+            animation: float 9s ease-in-out infinite;
+        }
+
+        .orb-one {
+            width: 300px;
+            height: 300px;
+            top: 5%;
+            left: -80px;
+
             background: #2563eb;
-            color: white;
-            padding: 18px 6%;
+
+            box-shadow:
+                0 0 100px #2563eb;
+        }
+
+        .orb-two {
+            width: 260px;
+            height: 260px;
+            top: 15%;
+            right: -70px;
+
+            background: #7c3aed;
+
+            box-shadow:
+                0 0 100px #7c3aed;
+
+            animation-delay: -3s;
+        }
+
+        .orb-three {
+            width: 230px;
+            height: 230px;
+            bottom: -100px;
+            left: 42%;
+
+            background: #06b6d4;
+
+            box-shadow:
+                0 0 90px #06b6d4;
+
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-25px);
+            }
+        }
+
+        /* =================================
+           PARTICLES
+        ================================= */
+
+        .particle {
+            position: fixed;
+
+            width: 5px;
+            height: 5px;
+
+            border-radius: 50%;
+
+            background: #60a5fa;
+
+            box-shadow:
+                0 0 15px #60a5fa;
+
+            animation: particleFloat 7s ease-in-out infinite;
+
+            z-index: 1;
+        }
+
+        .p1 {
+            top: 20%;
+            left: 30%;
+        }
+
+        .p2 {
+            top: 65%;
+            left: 15%;
+            animation-delay: -2s;
+        }
+
+        .p3 {
+            top: 35%;
+            right: 25%;
+            animation-delay: -4s;
+        }
+
+        .p4 {
+            bottom: 15%;
+            right: 18%;
+            animation-delay: -1s;
+        }
+
+        .p5 {
+            top: 80%;
+            left: 50%;
+            animation-delay: -5s;
+        }
+
+        @keyframes particleFloat {
+
+            0%, 100% {
+                transform: translateY(0);
+                opacity: .25;
+            }
+
+            50% {
+                transform: translateY(-25px);
+                opacity: 1;
+            }
+        }
+
+        /* =================================
+           NAVBAR
+        ================================= */
+
+        .navbar {
+            position: relative;
+            z-index: 10;
+
+            padding: 20px 6%;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+
+            background:
+                rgba(3,7,18,.45);
+
+            backdrop-filter: blur(15px);
         }
 
-        .navbar h2 {
-            margin: 0;
+        .brand {
+            color: white;
+            text-decoration: none;
+
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .brand span {
+            color: #8b5cf6;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .student-badge {
+            padding: 9px 15px;
+
+            border-radius: 30px;
+
+            color: #cbd5e1;
+
+            background:
+                rgba(255,255,255,.06);
+
+            border:
+                1px solid rgba(255,255,255,.12);
+
+            backdrop-filter: blur(10px);
+
+            font-size: 13px;
         }
 
         .logout {
             color: white;
             text-decoration: none;
-            background: #1d4ed8;
+
             padding: 10px 18px;
-            border-radius: 7px;
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 8px 25px rgba(79,70,229,.25);
+
+            transition: .3s;
         }
+
+        .logout:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 30px rgba(79,70,229,.4);
+        }
+
+        /* =================================
+           MAIN
+        ================================= */
 
         .container {
+            position: relative;
+            z-index: 5;
+
             width: 90%;
-            max-width: 1100px;
-            margin: 40px auto;
+            max-width: 1150px;
+
+            margin: 45px auto 70px;
         }
 
+        /* =================================
+           WELCOME
+        ================================= */
+
         .welcome {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+
+            transform-style: preserve-3d;
         }
 
         .welcome h1 {
-            color: #1d4ed8;
-            margin-bottom: 5px;
+
+            font-size: 42px;
+
+            margin-bottom: 8px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #60a5fa,
+                    #a78bfa,
+                    #c4b5fd
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            text-shadow:
+                0 0 30px rgba(99,102,241,.15);
         }
 
         .welcome p {
-            color: #666;
+            color: #94a3b8;
+            font-size: 16px;
         }
 
+        /* =================================
+           GLASS CARDS
+        ================================= */
+
+        .profile-card,
+        .action-card {
+
+            position: relative;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.12),
+                    rgba(255,255,255,.035)
+                );
+
+            border:
+                1px solid rgba(255,255,255,.13);
+
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.35),
+                inset 0 1px 1px rgba(255,255,255,.12);
+
+            transition:
+                transform .3s ease,
+                box-shadow .3s ease,
+                border-color .3s ease;
+        }
+
+        .profile-card:hover,
+        .action-card:hover {
+
+            transform:
+                translateY(-7px)
+                rotateX(1deg)
+                rotateY(-1deg);
+
+            border-color:
+                rgba(139,92,246,.35);
+
+            box-shadow:
+                0 35px 90px rgba(0,0,0,.45),
+                0 0 35px rgba(99,102,241,.10);
+        }
+
+        /* =================================
+           PROFILE
+        ================================= */
+
         .profile-card {
-            background: white;
+
             padding: 30px;
-            border-radius: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
+
+            border-radius: 25px;
+
+            margin-bottom: 30px;
         }
 
         .profile-card h2 {
-            margin-top: 0;
-            color: #1d4ed8;
+
+            margin-bottom: 25px;
+
+            font-size: 25px;
+
+            color: #e2e8f0;
         }
 
         .profile-grid {
+
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 18px;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 16px;
         }
 
         .profile-item {
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 8px;
+
+            padding: 18px;
+
+            border-radius: 16px;
+
+            background:
+                rgba(15,23,42,.50);
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            transition: .3s;
+        }
+
+        .profile-item:hover {
+
+            background:
+                rgba(30,41,59,.70);
+
+            transform:
+                translateZ(10px)
+                translateY(-2px);
+
+            border-color:
+                rgba(96,165,250,.25);
         }
 
         .profile-item strong {
+
             display: block;
-            color: #555;
-            margin-bottom: 6px;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .7px;
+
+            margin-bottom: 7px;
         }
 
         .profile-item span {
+
+            color: #e2e8f0;
+
             font-size: 16px;
-            font-weight: bold;
+
+            font-weight: 600;
+
+            word-break: break-word;
         }
 
+        /* =================================
+           ACTIONS
+        ================================= */
+
         .actions {
+
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 22px;
         }
 
         .action-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            padding: 30px 24px;
+
+            border-radius: 22px;
+
             text-align: center;
         }
 
+        .action-icon {
+
+            width: 65px;
+            height: 65px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            font-size: 30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(59,130,246,.22),
+                    rgba(139,92,246,.22)
+                );
+
+            border:
+                1px solid rgba(255,255,255,.12);
+
+            box-shadow:
+                0 10px 30px rgba(79,70,229,.15);
+        }
+
         .action-card h3 {
-            color: #1d4ed8;
+
+            color: #e2e8f0;
+
+            margin-bottom: 10px;
+
+            font-size: 20px;
+        }
+
+        .action-card p {
+
+            color: #94a3b8;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+
+            min-height: 45px;
         }
 
         .action-card a {
+
             display: inline-block;
-            margin-top: 10px;
-            padding: 10px 18px;
-            background: #2563eb;
+
+            margin-top: 20px;
+
+            padding: 11px 20px;
+
+            border-radius: 12px;
+
             color: white;
+
             text-decoration: none;
-            border-radius: 7px;
+
+            font-weight: 600;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 10px 25px rgba(79,70,229,.25);
+
+            transition: .3s;
         }
 
         .action-card a:hover {
-            background: #1d4ed8;
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 15px 35px rgba(79,70,229,.4);
         }
 
-        @media (max-width: 700px) {
+        /* =================================
+           CGPA HIGHLIGHT
+        ================================= */
 
-            .profile-grid,
+        .profile-item.cgpa {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(37,99,235,.13),
+                    rgba(124,58,237,.13)
+                );
+
+            border-color:
+                rgba(99,102,241,.20);
+        }
+
+        /* =================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 850px) {
+
             .actions {
                 grid-template-columns: 1fr;
             }
 
+            .action-card {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            body {
+                overflow-y: auto;
+            }
+
             .navbar {
-                padding: 15px 4%;
+                padding: 16px 20px;
+            }
+
+            .brand {
+                font-size: 17px;
+            }
+
+            .student-badge {
+                display: none;
             }
 
             .container {
-                width: 94%;
+                width: 92%;
+                margin-top: 30px;
             }
 
+            .welcome h1 {
+                font-size: 32px;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-card {
+                padding: 22px;
+            }
+
+            .orb-one {
+                width: 180px;
+                height: 180px;
+            }
+
+            .orb-two {
+                width: 160px;
+                height: 160px;
+            }
         }
 
     </style>
-
 </head>
+
 
 <body>
 
+    <!-- =================================
+         BACKGROUND
+    ================================== -->
 
-<!-- NAVBAR -->
+    <div class="background">
 
-<div class="navbar">
-
-    <h2>
-        Campus Placement System
-    </h2>
-
-    <a
-        href="{{ url_for('student_logout') }}"
-        class="logout"
-    >
-        Logout
-    </a>
-
-</div>
-
-
-<!-- MAIN -->
-
-<div class="container">
-
-
-    <!-- WELCOME -->
-
-    <div class="welcome">
-
-        <h1>
-            Welcome, {{ student.name }} 👋
-        </h1>
-
-        <p>
-            Welcome to your student placement dashboard.
-        </p>
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="orb orb-three"></div>
 
     </div>
 
 
-    <!-- PROFILE -->
+    <!-- =================================
+         PARTICLES
+    ================================== -->
 
-    <div class="profile-card">
-
-        <h2>
-            👨‍🎓 My Profile
-        </h2>
-
-
-        <div class="profile-grid">
+    <div class="particle p1"></div>
+    <div class="particle p2"></div>
+    <div class="particle p3"></div>
+    <div class="particle p4"></div>
+    <div class="particle p5"></div>
 
 
-            <div class="profile-item">
+    <!-- =================================
+         NAVBAR
+    ================================== -->
 
-                <strong>
-                    Name
-                </strong>
+    <nav class="navbar">
 
-                <span>
-                    {{ student.name }}
-                </span>
+        <a
+            href="{{ url_for('home') }}"
+            class="brand"
+        >
+            Campus <span>Placement</span>
+        </a>
 
+        <div class="nav-right">
+
+            <div class="student-badge">
+                🎓 Student Portal
             </div>
 
-
-            <div class="profile-item">
-
-                <strong>
-                    Register Number
-                </strong>
-
-                <span>
-                    {{ student.register_no }}
-                </span>
-
-            </div>
-
-
-            <div class="profile-item">
-
-                <strong>
-                    Email
-                </strong>
-
-                <span>
-                    {{ student.email }}
-                </span>
-
-            </div>
-
-
-            <div class="profile-item">
-
-                <strong>
-                    Phone
-                </strong>
-
-                <span>
-                    {{ student.phone }}
-                </span>
-
-            </div>
-
-
-            <div class="profile-item">
-
-                <strong>
-                    Department
-                </strong>
-
-                <span>
-                    {{ student.department }}
-                </span>
-
-            </div>
-
-
-            <div class="profile-item">
-
-                <strong>
-                    Year
-                </strong>
-
-                <span>
-                    {{ student.year }}
-                </span>
-
-            </div>
-
-
-            {% if student.cgpa is defined %}
-
-            <div class="profile-item">
-
-                <strong>
-                    CGPA
-                </strong>
-
-                <span>
-                    {{ student.cgpa }}
-                </span>
-
-            </div>
-
-            {% endif %}
-
-
-        </div>
-
-    </div>
-
-
-    <!-- ACTIONS -->
-
-    <div class="actions">
-
-
-        <div class="action-card">
-
-            <h3>
-                🏢 Companies
-            </h3>
-
-            <p>
-                View available placement companies.
-            </p>
-
-            <a href="{{ url_for('companies') }}">
-                View Companies
-            </a>
-
-        </div>
-
-
-        <div class="action-card">
-
-            <h3>
-                📋 My Applications
-            </h3>
-
-            <p>
-                Track your placement applications.
-            </p>
-
-            <a href="{{ url_for('my_applications') }}">
-                View Applications
-            </a>
-
-        </div>
-
-
-        <div class="action-card">
-
-            <h3>
-                🚪 Logout
-            </h3>
-
-            <p>
-                Logout from your student account.
-            </p>
-
-            <a href="{{ url_for('student_logout') }}">
+            <a
+                href="{{ url_for('student_logout') }}"
+                class="logout"
+            >
                 Logout
             </a>
 
         </div>
 
+    </nav>
 
-    </div>
+
+    <!-- =================================
+         MAIN
+    ================================== -->
+
+    <main class="container">
 
 
-</div>
+        <!-- WELCOME -->
+
+        <section class="welcome">
+
+            <h1>
+                Welcome, {{ student.name }} 👋
+            </h1>
+
+            <p>
+                Manage your placement journey from your personal dashboard.
+            </p>
+
+        </section>
+
+
+        <!-- =================================
+             PROFILE
+        ================================== -->
+
+        <section class="profile-card">
+
+            <h2>
+                👨‍🎓 My Profile
+            </h2>
+
+
+            <div class="profile-grid">
+
+
+                <div class="profile-item">
+
+                    <strong>
+                        Name
+                    </strong>
+
+                    <span>
+                        {{ student.name }}
+                    </span>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <strong>
+                        Register Number
+                    </strong>
+
+                    <span>
+                        {{ student.register_no }}
+                    </span>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <strong>
+                        Email
+                    </strong>
+
+                    <span>
+                        {{ student.email }}
+                    </span>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <strong>
+                        Phone
+                    </strong>
+
+                    <span>
+                        {{ student.phone }}
+                    </span>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <strong>
+                        Department
+                    </strong>
+
+                    <span>
+                        {{ student.department }}
+                    </span>
+
+                </div>
+
+
+                <div class="profile-item">
+
+                    <strong>
+                        Year
+                    </strong>
+
+                    <span>
+                        {{ student.year }}
+                    </span>
+
+                </div>
+
+
+                {% if student.cgpa is defined %}
+
+                <div class="profile-item cgpa">
+
+                    <strong>
+                        CGPA
+                    </strong>
+
+                    <span>
+                        {{ student.cgpa }}
+                    </span>
+
+                </div>
+
+                {% endif %}
+
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================
+             ACTIONS
+        ================================== -->
+
+        <section class="actions">
+
+
+            <!-- COMPANIES -->
+
+            <div class="action-card">
+
+                <div class="action-icon">
+                    🏢
+                </div>
+
+                <h3>
+                    Companies
+                </h3>
+
+                <p>
+                    Discover available placement companies
+                    and explore career opportunities.
+                </p>
+
+                <a href="{{ url_for('companies') }}">
+                    View Companies →
+                </a>
+
+            </div>
+
+
+            <!-- APPLICATIONS -->
+
+            <div class="action-card">
+
+                <div class="action-icon">
+                    📋
+                </div>
+
+                <h3>
+                    My Applications
+                </h3>
+
+                <p>
+                    Track your placement applications
+                    and application status.
+                </p>
+
+                <a href="{{ url_for('my_applications') }}">
+                    View Applications →
+                </a>
+
+            </div>
+
+
+            <!-- LOGOUT -->
+
+            <div class="action-card">
+
+                <div class="action-icon">
+                    🚪
+                </div>
+
+                <h3>
+                    Logout
+                </h3>
+
+                <p>
+                    Securely logout from your
+                    student placement account.
+                </p>
+
+                <a href="{{ url_for('student_logout') }}">
+                    Logout →
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =================================
+         3D MOUSE EFFECT
+    ================================== -->
+
+    <script>
+
+        const cards =
+            document.querySelectorAll(
+                ".profile-card, .action-card"
+            );
+
+
+        document.addEventListener(
+            "mousemove",
+            function(event) {
+
+                const x =
+                    event.clientX /
+                    window.innerWidth;
+
+                const y =
+                    event.clientY /
+                    window.innerHeight;
+
+                const rotateY =
+                    (x - 0.5) * 3;
+
+                const rotateX =
+                    (0.5 - y) * 3;
+
+
+                cards.forEach(function(card) {
+
+                    card.style.transform =
+                        `perspective(1000px)
+                         rotateX(${rotateX}deg)
+                         rotateY(${rotateY}deg)`;
+
+                });
+
+            }
+        );
+
+
+        document.addEventListener(
+            "mouseleave",
+            function() {
+
+                cards.forEach(function(card) {
+
+                    card.style.transform =
+                        "";
+
+                });
+
+            }
+        );
+
+    </script>
 
 </body>
 

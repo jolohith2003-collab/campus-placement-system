@@ -8,218 +8,708 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Applications - Admin</title>
+    <title>Applications - Campus Placement</title>
 
     <style>
 
-        body {
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #222;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        /* ================= NAVBAR ================= */
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(0,119,255,0.20),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(124,58,237,0.20),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #020617,
+                    #071329,
+                    #030712
+                );
+
+            overflow-x: hidden;
+        }
+
+
+        /* GLOWING BACKGROUND */
+
+        .glow {
+
+            position: fixed;
+
+            width: 320px;
+            height: 320px;
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            opacity: 0.30;
+
+            pointer-events: none;
+        }
+
+        .glow-one {
+
+            background: #0066ff;
+
+            top: 60px;
+            left: -130px;
+        }
+
+        .glow-two {
+
+            background: #7c3aed;
+
+            right: -130px;
+            top: 400px;
+        }
+
+        .glow-three {
+
+            background: #06b6d4;
+
+            bottom: -150px;
+            left: 40%;
+        }
+
+
+        /* NAVBAR */
 
         .navbar {
-            background: #2563eb;
-            color: white;
 
-            padding: 18px 6%;
+            position: relative;
+
+            z-index: 5;
+
+            width: 92%;
+
+            margin: 20px auto;
+
+            padding: 18px 25px;
 
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
+            border-radius: 20px;
+
+            background:
+                rgba(15,23,42,0.65);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,0.35);
         }
 
-        .navbar h2 {
-            margin: 0;
+
+        .logo {
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #60a5fa,
+                    #a78bfa,
+                    #22d3ee
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
         }
 
-        .navbar a {
+
+        .nav-links {
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+
+        .nav-links a {
+
             color: white;
-            text-decoration: none;
 
-            background: #1d4ed8;
+            text-decoration: none;
 
             padding: 10px 18px;
 
-            border-radius: 6px;
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            transition: 0.3s ease;
         }
 
-        .navbar a:hover {
-            background: #1e40af;
+
+        .nav-links a:hover {
+
+            transform:
+                translateY(-3px);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(37,99,235,0.35);
         }
 
-        /* ================= CONTAINER ================= */
+
+        /* MAIN */
 
         .container {
-            width: 90%;
-            max-width: 1400px;
-            margin: 40px auto;
+
+            position: relative;
+
+            z-index: 2;
+
+            width: 92%;
+
+            max-width: 1500px;
+
+            margin: 55px auto 80px;
         }
 
-        h1 {
-            margin-bottom: 10px;
-        }
 
-        .subtitle {
-            color: #666;
+        .heading {
+
             margin-bottom: 30px;
         }
 
-        /* ================= TABLE ================= */
 
-        .table-container {
-            background: white;
+        .heading h1 {
 
-            padding: 20px;
+            font-size: 50px;
 
-            border-radius: 12px;
+            margin-bottom: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #60a5fa,
+                    #c084fc
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .heading p {
+
+            color: #94a3b8;
+
+            font-size: 17px;
+        }
+
+
+        /* FLASH */
+
+        .flash {
+
+            padding: 15px 20px;
+
+            margin-bottom: 20px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+        }
+
+
+        .flash.success {
+
+            color: #86efac;
+
+            border-color:
+                rgba(34,197,94,0.30);
+        }
+
+
+        .flash.error {
+
+            color: #fca5a5;
+
+            border-color:
+                rgba(239,68,68,0.30);
+        }
+
+
+        /* GLASS TABLE CARD */
+
+        .glass-card {
+
+            padding: 25px;
+
+            border-radius: 25px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.10),
+                    rgba(255,255,255,0.04)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            backdrop-filter: blur(20px);
 
             box-shadow:
-                0 4px 15px
-                rgba(0, 0, 0, 0.08);
+                0 30px 80px
+                rgba(0,0,0,0.38);
+
+            transition: 0.3s ease;
+        }
+
+
+        .glass-card:hover {
+
+            box-shadow:
+                0 40px 100px
+                rgba(0,0,0,0.48);
+        }
+
+
+        .table-wrapper {
+
+            width: 100%;
 
             overflow-x: auto;
         }
 
+
         table {
+
             width: 100%;
-            border-collapse: collapse;
+
+            min-width: 1050px;
+
+            border-collapse: separate;
+
+            border-spacing: 0 10px;
         }
+
 
         th {
-            background: #2563eb;
-            color: white;
 
-            padding: 14px;
+            padding: 17px 15px;
 
             text-align: left;
+
+            color: white;
+
+            font-size: 14px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #4f46e5
+                );
         }
+
+
+        th:first-child {
+
+            border-radius:
+                12px 0 0 12px;
+        }
+
+
+        th:last-child {
+
+            border-radius:
+                0 12px 12px 0;
+        }
+
 
         td {
-            padding: 14px;
 
-            border-bottom: 1px solid #ddd;
+            padding: 17px 15px;
+
+            color: #dbeafe;
+
+            background:
+                rgba(15,23,42,0.72);
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.06);
         }
 
-        tr:hover {
-            background: #f8fafc;
+
+        td:first-child {
+
+            border-left:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            border-radius:
+                14px 0 0 14px;
         }
 
-        /* ================= STATUS ================= */
+
+        td:last-child {
+
+            border-right:
+                1px solid
+                rgba(255,255,255,0.06);
+
+            border-radius:
+                0 14px 14px 0;
+        }
+
+
+        tbody tr {
+
+            transition: 0.3s ease;
+        }
+
+
+        tbody tr:hover {
+
+            transform:
+                translateY(-3px);
+        }
+
+
+        tbody tr:hover td {
+
+            background:
+                rgba(255,255,255,0.075);
+        }
+
+
+        /* STUDENT */
+
+        .student-name {
+
+            color: #60a5fa;
+
+            font-weight: 700;
+
+            font-size: 16px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .register-no {
+
+            color: #64748b;
+
+            font-size: 12px;
+        }
+
+
+        /* STATUS */
 
         .status {
+
             display: inline-block;
 
-            padding: 6px 12px;
+            padding: 7px 13px;
 
             border-radius: 20px;
 
-            font-weight: bold;
-
             font-size: 13px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
         }
+
 
         .status-applied {
-            background: #dbeafe;
-            color: #1d4ed8;
+
+            color: #70c9ff;
+
+            background:
+                rgba(0,119,255,0.16);
+
+            border:
+                1px solid
+                rgba(70,170,255,0.30);
         }
+
 
         .status-shortlisted {
-            background: #fef3c7;
-            color: #92400e;
+
+            color: #ffd76a;
+
+            background:
+                rgba(255,193,7,0.13);
+
+            border:
+                1px solid
+                rgba(255,193,7,0.30);
         }
+
 
         .status-selected {
-            background: #dcfce7;
-            color: #166534;
+
+            color: #70e59a;
+
+            background:
+                rgba(34,197,94,0.13);
+
+            border:
+                1px solid
+                rgba(34,197,94,0.30);
         }
+
 
         .status-rejected {
-            background: #fee2e2;
-            color: #991b1b;
+
+            color: #ff8585;
+
+            background:
+                rgba(239,68,68,0.13);
+
+            border:
+                1px solid
+                rgba(239,68,68,0.30);
         }
 
-        /* ================= UPDATE ================= */
 
-        select {
-            padding: 8px;
+        /* UPDATE FORM */
 
-            border: 1px solid #ccc;
+        .status-form {
 
-            border-radius: 6px;
+            display: flex;
 
-            background: white;
+            gap: 8px;
+
+            align-items: center;
         }
 
-        .update-btn {
-            background: #2563eb;
+
+        .status-form select {
+
+            padding: 10px 12px;
+
+            border-radius: 10px;
 
             color: white;
 
+            background:
+                #0f172a;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.15);
+
+            outline: none;
+
+            cursor: pointer;
+        }
+
+
+        .status-form select option {
+
+            background: #0f172a;
+
+            color: white;
+        }
+
+
+        .update-btn {
+
             border: none;
 
-            padding: 8px 14px;
+            padding: 10px 14px;
 
-            border-radius: 6px;
+            border-radius: 10px;
+
+            color: white;
+
+            font-weight: 600;
 
             cursor: pointer;
 
-            margin-left: 5px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
 
-            font-weight: bold;
+            transition: 0.3s ease;
         }
+
 
         .update-btn:hover {
-            background: #1d4ed8;
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(37,99,235,0.30);
         }
 
-        /* ================= EMPTY ================= */
 
-        .empty {
-            background: white;
+        /* EMPTY */
 
-            padding: 40px;
+        .empty-state {
 
             text-align: center;
 
-            border-radius: 12px;
+            padding: 70px 20px;
+
+            color: #94a3b8;
+        }
+
+
+        .empty-icon {
+
+            font-size: 60px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .empty-state h3 {
+
+            color: white;
+
+            font-size: 25px;
+
+            margin-bottom: 8px;
+        }
+
+
+        /* BACK */
+
+        .back-btn {
+
+            display: inline-block;
+
+            margin-top: 30px;
+
+            padding: 14px 22px;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #334155,
+                    #475569
+                );
+
+            transition: 0.3s ease;
+        }
+
+
+        .back-btn:hover {
+
+            transform:
+                translateY(-3px);
 
             box-shadow:
-                0 4px 15px
-                rgba(0, 0, 0, 0.08);
+                0 15px 30px
+                rgba(0,0,0,0.30);
         }
 
-        /* ================= FLASH ================= */
 
-        .message {
-            padding: 14px 18px;
+        /* MOBILE */
 
-            margin-bottom: 20px;
-
-            border-radius: 8px;
-
-            background: #dcfce7;
-
-            color: #166534;
-
-            font-weight: bold;
-        }
-
-        /* ================= MOBILE ================= */
-
-        @media (max-width: 800px) {
+        @media (max-width: 700px) {
 
             .navbar {
+
                 flex-direction: column;
+
                 gap: 15px;
-                text-align: center;
+
+                align-items: flex-start;
             }
 
-            .container {
-                width: 95%;
+            .nav-links {
+
+                flex-wrap: wrap;
+            }
+
+            .heading h1 {
+
+                font-size: 38px;
+            }
+
+            .glass-card {
+
+                padding: 18px;
+            }
+
+            .status-form {
+
+                flex-direction: column;
+
+                align-items: stretch;
             }
 
         }
@@ -232,49 +722,53 @@
 <body>
 
 
-<!-- =====================================================
-     NAVBAR
-===================================================== -->
+<div class="glow glow-one"></div>
+<div class="glow glow-two"></div>
+<div class="glow glow-three"></div>
 
-<div class="navbar">
 
-    <h2>
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
         Campus Placement System - Admin
-    </h2>
+    </div>
 
-    <div>
+    <div class="nav-links">
 
         <a href="{{ url_for('admin_dashboard') }}">
-            Dashboard
+            🏠 Dashboard
         </a>
 
         <a href="{{ url_for('admin_logout') }}">
-            Logout
+            🚪 Logout
         </a>
 
     </div>
 
-</div>
+</nav>
 
 
-<!-- =====================================================
-     MAIN CONTENT
-===================================================== -->
+<!-- MAIN -->
 
-<div class="container">
-
-    <h1>
-        Student Applications
-    </h1>
-
-    <p class="subtitle">
-        View and manage student placement applications.
-    </p>
+<main class="container">
 
 
-    <!-- =================================================
-         FLASH MESSAGES
-    ================================================== -->
+    <div class="heading">
+
+        <h1>
+            📋 Placement Applications
+        </h1>
+
+        <p>
+            View student applications and update their placement status.
+        </p>
+
+    </div>
+
+
+    <!-- FLASH -->
 
     {% with messages = get_flashed_messages(with_categories=true) %}
 
@@ -282,7 +776,7 @@
 
             {% for category, message in messages %}
 
-                <div class="message">
+                <div class="flash {{ category }}">
                     {{ message }}
                 </div>
 
@@ -293,264 +787,306 @@
     {% endwith %}
 
 
-    <!-- =================================================
-         APPLICATIONS
-    ================================================== -->
+    <!-- APPLICATIONS -->
 
-    {% if applications %}
+    <section class="glass-card">
 
 
-    <div class="table-container">
+        {% if applications %}
 
-        <table>
 
-            <thead>
+        <div class="table-wrapper">
 
-                <tr>
+            <table>
 
-                    <th>
-                        ID
-                    </th>
+                <thead>
 
-                    <th>
-                        Student
-                    </th>
+                    <tr>
 
-                    <th>
-                        Register No
-                    </th>
+                        <th>
+                            Student
+                        </th>
 
-                    <th>
-                        Company
-                    </th>
+                        <th>
+                            Company
+                        </th>
 
-                    <th>
-                        Job Role
-                    </th>
+                        <th>
+                            Job Role
+                        </th>
 
-                    <th>
-                        Salary
-                    </th>
+                        <th>
+                            Salary
+                        </th>
 
-                    <th>
-                        Status
-                    </th>
+                        <th>
+                            Status
+                        </th>
 
-                    <th>
-                        Applied On
-                    </th>
+                        <th>
+                            Applied On
+                        </th>
 
-                    <th>
-                        Update
-                    </th>
+                        <th>
+                            Update
+                        </th>
 
-                </tr>
+                    </tr>
 
-            </thead>
+                </thead>
 
 
-            <tbody>
+                <tbody>
 
-                {% for application in applications %}
 
-                <tr>
+                    {% for application in applications %}
 
+                    <tr>
 
-                    <!-- ID -->
 
-                    <td>
-                        {{ application.id }}
-                    </td>
+                        <!-- STUDENT -->
 
+                        <td>
 
-                    <!-- STUDENT -->
+                            <div class="student-name">
+                                {{ application.student_name }}
+                            </div>
 
-                    <td>
+                            <div class="register-no">
+                                {{ application.register_no }}
+                            </div>
 
-                        <strong>
-                            {{ application.student_name }}
-                        </strong>
+                        </td>
 
-                    </td>
 
+                        <!-- COMPANY -->
 
-                    <!-- REGISTER NUMBER -->
+                        <td>
+                            {{ application.company_name }}
+                        </td>
 
-                    <td>
-                        {{ application.register_no }}
-                    </td>
 
+                        <!-- JOB -->
 
-                    <!-- COMPANY -->
+                        <td>
+                            {{ application.job_role }}
+                        </td>
 
-                    <td>
-                        {{ application.company_name }}
-                    </td>
 
+                        <!-- SALARY -->
 
-                    <!-- JOB ROLE -->
+                        <td>
+                            {{ application.salary }}
+                        </td>
 
-                    <td>
-                        {{ application.job_role }}
-                    </td>
 
+                        <!-- STATUS -->
 
-                    <!-- SALARY -->
+                        <td>
 
-                    <td>
-                        {{ application.salary }}
-                    </td>
+                            {% if application.status == "Selected" %}
 
+                                <span class="status status-selected">
+                                    ✓ Selected
+                                </span>
 
-                    <!-- STATUS -->
+                            {% elif application.status == "Shortlisted" %}
 
-                    <td>
+                                <span class="status status-shortlisted">
+                                    ★ Shortlisted
+                                </span>
 
-                        {% if application.status == "Applied" %}
+                            {% elif application.status == "Rejected" %}
 
-                            <span class="status status-applied">
-                                Applied
-                            </span>
+                                <span class="status status-rejected">
+                                    ✕ Rejected
+                                </span>
 
-                        {% elif application.status == "Shortlisted" %}
+                            {% else %}
 
-                            <span class="status status-shortlisted">
-                                Shortlisted
-                            </span>
+                                <span class="status status-applied">
+                                    ● {{ application.status }}
+                                </span>
 
-                        {% elif application.status == "Selected" %}
+                            {% endif %}
 
-                            <span class="status status-selected">
-                                Selected
-                            </span>
+                        </td>
 
-                        {% elif application.status == "Rejected" %}
 
-                            <span class="status status-rejected">
-                                Rejected
-                            </span>
+                        <!-- DATE -->
 
-                        {% else %}
+                        <td>
+                            {{ application.applied_at }}
+                        </td>
 
-                            <span class="status">
-                                {{ application.status }}
-                            </span>
 
-                        {% endif %}
+                        <!-- UPDATE -->
 
-                    </td>
+                        <td>
 
-
-                    <!-- APPLIED DATE -->
-
-                    <td>
-                        {{ application.applied_at }}
-                    </td>
-
-
-                    <!-- UPDATE STATUS -->
-
-                    <td>
-
-                        <form
-                            method="POST"
-                            action="{{ url_for(
-                                'update_application_status',
-                                application_id=application.id
-                            ) }}"
-                        >
-
-                            <select name="status">
-
-                                <option
-                                    value="Applied"
-                                    {% if application.status == "Applied" %}
-                                    selected
-                                    {% endif %}
-                                >
-                                    Applied
-                                </option>
-
-
-                                <option
-                                    value="Shortlisted"
-                                    {% if application.status == "Shortlisted" %}
-                                    selected
-                                    {% endif %}
-                                >
-                                    Shortlisted
-                                </option>
-
-
-                                <option
-                                    value="Selected"
-                                    {% if application.status == "Selected" %}
-                                    selected
-                                    {% endif %}
-                                >
-                                    Selected
-                                </option>
-
-
-                                <option
-                                    value="Rejected"
-                                    {% if application.status == "Rejected" %}
-                                    selected
-                                    {% endif %}
-                                >
-                                    Rejected
-                                </option>
-
-                            </select>
-
-
-                            <button
-                                type="submit"
-                                class="update-btn"
+                            <form
+                                method="POST"
+                                action="{{ url_for('update_application_status', application_id=application.id) }}"
+                                class="status-form"
                             >
-                                Update
-                            </button>
 
-                        </form>
+                                <select name="status">
 
-                    </td>
+                                    <option
+                                        value="Applied"
+                                        {% if application.status == "Applied" %}
+                                        selected
+                                        {% endif %}
+                                    >
+                                        Applied
+                                    </option>
+
+                                    <option
+                                        value="Shortlisted"
+                                        {% if application.status == "Shortlisted" %}
+                                        selected
+                                        {% endif %}
+                                    >
+                                        Shortlisted
+                                    </option>
+
+                                    <option
+                                        value="Selected"
+                                        {% if application.status == "Selected" %}
+                                        selected
+                                        {% endif %}
+                                    >
+                                        Selected
+                                    </option>
+
+                                    <option
+                                        value="Rejected"
+                                        {% if application.status == "Rejected" %}
+                                        selected
+                                        {% endif %}
+                                    >
+                                        Rejected
+                                    </option>
+
+                                </select>
 
 
-                </tr>
+                                <button
+                                    type="submit"
+                                    class="update-btn"
+                                >
+                                    Update
+                                </button>
 
-                {% endfor %}
+                            </form>
 
-            </tbody>
-
-        </table>
-
-    </div>
-
-
-    {% else %}
+                        </td>
 
 
-    <!-- =================================================
-         NO APPLICATIONS
-    ================================================== -->
+                    </tr>
 
-    <div class="empty">
-
-        <h2>
-            No Applications
-        </h2>
-
-        <p>
-            No students have applied for any companies yet.
-        </p>
-
-    </div>
+                    {% endfor %}
 
 
-    {% endif %}
+                </tbody>
+
+            </table>
+
+        </div>
 
 
-</div>
+        {% else %}
+
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                📭
+            </div>
+
+            <h3>
+                No Applications
+            </h3>
+
+            <p>
+                There are currently no student placement applications.
+            </p>
+
+        </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+    <a
+        href="{{ url_for('admin_dashboard') }}"
+        class="back-btn"
+    >
+        ← Back to Dashboard
+    </a>
+
+
+</main>
+
+
+<!-- 3D MOUSE EFFECT -->
+
+<script>
+
+    const card =
+        document.querySelector(".glass-card");
+
+
+    if (card) {
+
+        card.addEventListener(
+            "mousemove",
+            function(event) {
+
+                const rect =
+                    card.getBoundingClientRect();
+
+                const x =
+                    event.clientX - rect.left;
+
+                const y =
+                    event.clientY - rect.top;
+
+                const centerX =
+                    rect.width / 2;
+
+                const centerY =
+                    rect.height / 2;
+
+                const rotateX =
+                    ((y - centerY) / centerY) * -1;
+
+                const rotateY =
+                    ((x - centerX) / centerX) * 1;
+
+                card.style.transform =
+                    `perspective(1200px)
+                     rotateX(${rotateX}deg)
+                     rotateY(${rotateY}deg)`;
+            }
+        );
+
+
+        card.addEventListener(
+            "mouseleave",
+            function() {
+
+                card.style.transform =
+                    "perspective(1200px) rotateX(0deg) rotateY(0deg)";
+            }
+        );
+
+    }
+
+</script>
 
 
 </body>

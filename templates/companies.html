@@ -1,26 +1,497 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Companies - Campus Placement System</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
 
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(0, 153, 255, 0.18), transparent 30%),
+                radial-gradient(circle at 85% 80%, rgba(132, 0, 255, 0.20), transparent 30%),
+                linear-gradient(135deg, #050816, #0b1026, #050816);
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           FLOATING 3D ORBS
+        ========================= */
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.35;
+            z-index: -1;
+            pointer-events: none;
+            animation: floatOrb 8s ease-in-out infinite alternate;
+        }
+
+        body::before {
+            background: #0077ff;
+            top: 80px;
+            left: -100px;
+        }
+
+        body::after {
+            background: #8b00ff;
+            right: -100px;
+            bottom: 50px;
+            animation-delay: 2s;
+        }
+
+        @keyframes floatOrb {
+            from {
+                transform: translateY(0) translateX(0) scale(1);
+            }
+
+            to {
+                transform: translateY(-40px) translateX(30px) scale(1.15);
+            }
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            width: 100%;
+            padding: 18px 30px;
+
+            background: rgba(5, 8, 22, 0.65);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+
+            box-shadow:
+                0 10px 40px rgba(0, 0, 0, 0.30);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #63c5ff,
+                #b36cff
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+
+            background: rgba(255, 255, 255, 0.06);
+
+            transition: 0.3s ease;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(100, 190, 255, 0.5);
+
+            box-shadow:
+                0 8px 25px rgba(0, 153, 255, 0.20);
+        }
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            width: min(1200px, 92%);
+            margin: 0 auto;
+            padding: 70px 0;
+        }
+
+        .page-heading {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .page-heading h1 {
+            font-size: clamp(38px, 6vw, 68px);
+            line-height: 1.05;
+            margin-bottom: 18px;
+
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #61c5ff,
+                #a66cff,
+                #ffffff
+            );
+
+            background-size: 200% auto;
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            animation: gradientMove 5s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        .page-heading p {
+            color: #aebbd0;
+            font-size: 17px;
+        }
+
+        /* =========================
+           COMPANY GRID
+        ========================= */
+
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 28px;
+            perspective: 1200px;
+        }
+
+        /* =========================
+           COMPANY CARD
+        ========================= */
+
+        .company-card {
+            position: relative;
+
+            padding: 30px;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.12),
+                    rgba(255, 255, 255, 0.035)
+                );
+
+            border: 1px solid rgba(255, 255, 255, 0.14);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.35),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+            overflow: hidden;
+
+            transform-style: preserve-3d;
+
+            transition:
+                transform 0.45s ease,
+                border-color 0.45s ease,
+                box-shadow 0.45s ease;
+        }
+
+        .company-card::before {
+            content: "";
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            top: -100px;
+            right: -80px;
+
+            border-radius: 50%;
+
+            background: rgba(0, 174, 255, 0.20);
+
+            filter: blur(35px);
+
+            pointer-events: none;
+        }
+
+        .company-card::after {
+            content: "";
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 2px;
+
+            background: linear-gradient(
+                90deg,
+                transparent,
+                #42c8ff,
+                #9b5cff,
+                transparent
+            );
+
+            opacity: 0.7;
+        }
+
+        .company-card:hover {
+            transform:
+                translateY(-12px)
+                rotateX(3deg)
+                rotateY(-3deg);
+
+            border-color: rgba(74, 196, 255, 0.40);
+
+            box-shadow:
+                0 30px 70px rgba(0, 0, 0, 0.45),
+                0 0 35px rgba(0, 153, 255, 0.12);
+        }
+
+        /* =========================
+           COMPANY NAME
+        ========================= */
+
+        .company-card h2 {
+            position: relative;
+            z-index: 2;
+
+            margin-bottom: 24px;
+
+            font-size: 27px;
+
+            color: #ffffff;
+
+            transform: translateZ(20px);
+        }
+
+        .company-card p {
+            position: relative;
+            z-index: 2;
+
+            margin-bottom: 13px;
+
+            color: #b8c5d9;
+
+            line-height: 1.6;
+
+            transform: translateZ(10px);
+        }
+
+        .company-card strong {
+            color: #ffffff;
+        }
+
+        /* =========================
+           DESCRIPTION
+        ========================= */
+
+        .description {
+            margin-top: 18px;
+            padding-top: 18px;
+
+            border-top: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        /* =========================
+           APPLY BUTTON
+        ========================= */
+
+        .apply-btn {
+            width: 100%;
+
+            margin-top: 18px;
+            padding: 14px 20px;
+
+            border: none;
+            border-radius: 14px;
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0077ff,
+                    #6a35ff
+                );
+
+            box-shadow:
+                0 10px 25px rgba(0, 100, 255, 0.25);
+
+            transition: 0.3s ease;
+
+            transform: translateZ(25px);
+        }
+
+        .apply-btn:hover {
+            transform:
+                translateZ(25px)
+                translateY(-3px)
+                scale(1.02);
+
+            box-shadow:
+                0 15px 35px rgba(0, 120, 255, 0.40);
+        }
+
+        .apply-btn:active {
+            transform:
+                translateZ(25px)
+                scale(0.98);
+        }
+
+        /* =========================
+           EMPTY MESSAGE
+        ========================= */
+
+        .empty-message {
+            max-width: 600px;
+            margin: 60px auto;
+
+            padding: 45px 30px;
+
+            text-align: center;
+
+            border-radius: 24px;
+
+            background: rgba(255, 255, 255, 0.06);
+
+            border: 1px solid rgba(255, 255, 255, 0.12);
+
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.35);
+        }
+
+        .empty-message h2 {
+            margin-bottom: 12px;
+            font-size: 28px;
+        }
+
+        .empty-message p {
+            color: #aebbd0;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back-wrapper {
+            text-align: center;
+            margin-top: 45px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            color: #ffffff;
+            text-decoration: none;
+
+            border-radius: 14px;
+
+            background: rgba(255, 255, 255, 0.07);
+
+            border: 1px solid rgba(255, 255, 255, 0.15);
+
+            backdrop-filter: blur(10px);
+
+            transition: 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+
+            background: rgba(255, 255, 255, 0.12);
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 18px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .nav-link {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+
+            .container {
+                width: 94%;
+                padding: 45px 0;
+            }
+
+            .company-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .company-card {
+                padding: 24px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
     <!-- NAVBAR -->
-
     <nav class="navbar">
-
         <div class="nav-container">
 
             <div class="logo">
@@ -33,19 +504,22 @@
             </a>
 
         </div>
-
     </nav>
 
 
     <!-- MAIN CONTENT -->
+    <main class="container">
 
-    <div class="container">
+        <div class="page-heading">
 
-        <h1>Placement Companies</h1>
+            <h1>Placement Companies</h1>
 
-        <p>
-            Companies currently available for campus placement.
-        </p>
+            <p>
+                Explore companies currently available
+                for campus placement.
+            </p>
+
+        </div>
 
 
         {% if companies %}
@@ -62,45 +536,45 @@
 
 
                 <p>
-                    <strong>Job Role:</strong>
+                    <strong>💼 Job Role:</strong><br>
                     {{ company.job_role }}
                 </p>
 
 
                 <p>
-                    <strong>Salary / Package:</strong>
+                    <strong>💰 Salary / Package:</strong><br>
                     {{ company.salary }}
                 </p>
 
 
                 <p>
-                    <strong>Minimum CGPA:</strong>
+                    <strong>🎓 Minimum CGPA:</strong><br>
                     {{ company.min_cgpa or "Not specified" }}
                 </p>
 
 
                 <p>
-                    <strong>Eligible Department:</strong>
+                    <strong>🏫 Eligible Department:</strong><br>
                     {{ company.eligible_department or "All Departments" }}
                 </p>
 
 
                 <p>
-                    <strong>Eligible Year:</strong>
+                    <strong>📅 Eligible Year:</strong><br>
                     {{ company.eligible_year or "All Years" }}
                 </p>
 
 
                 <p>
-                    <strong>Application Deadline:</strong>
+                    <strong>⏰ Application Deadline:</strong><br>
                     {{ company.deadline or "Not specified" }}
                 </p>
 
 
                 {% if company.description %}
 
-                <p>
-                    <strong>Description:</strong><br>
+                <p class="description">
+                    <strong>📝 Description:</strong><br>
                     {{ company.description }}
                 </p>
 
@@ -118,11 +592,10 @@
                         type="submit"
                         class="apply-btn"
                     >
-                        Apply Now
+                        Apply Now →
                     </button>
 
                 </form>
-
 
             </div>
 
@@ -146,18 +619,62 @@
         {% endif %}
 
 
-        <br>
+        <!-- BACK TO DASHBOARD -->
+
+        <div class="back-wrapper">
+
+            <a href="{{ url_for('student_dashboard') }}"
+               class="btn">
+
+                ← Back to Dashboard
+
+            </a>
+
+        </div>
+
+    </main>
 
 
-        <a href="{{ url_for('student_dashboard') }}"
-           class="btn">
+    <!-- 3D MOUSE EFFECT -->
+    <script>
 
-            ← Back to Dashboard
+        const cards = document.querySelectorAll(".company-card");
 
-        </a>
+        cards.forEach(card => {
 
-    </div>
+            card.addEventListener("mousemove", (event) => {
+
+                const rect = card.getBoundingClientRect();
+
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX =
+                    ((y - centerY) / centerY) * -4;
+
+                const rotateY =
+                    ((x - centerX) / centerX) * 4;
+
+                card.style.transform =
+                    `translateY(-10px)
+                     rotateX(${rotateX}deg)
+                     rotateY(${rotateY}deg)`;
+            });
+
+
+            card.addEventListener("mouseleave", () => {
+
+                card.style.transform =
+                    "translateY(0) rotateX(0) rotateY(0)";
+
+            });
+
+        });
+
+    </script>
 
 </body>
-
 </html>

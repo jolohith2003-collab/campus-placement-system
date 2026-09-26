@@ -5,83 +5,715 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Admin Login - Campus Placement System</title>
-
-    <!-- Bootstrap -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    <title>Admin Login - Campus Placement</title>
 
     <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #0d6efd, #6610f2);
+            font-family: Arial, Helvetica, sans-serif;
+            color: white;
+            overflow: hidden;
+
+            background:
+                radial-gradient(circle at 10% 15%, rgba(37, 99, 235, .35), transparent 28%),
+                radial-gradient(circle at 90% 20%, rgba(124, 58, 237, .35), transparent 30%),
+                radial-gradient(circle at 50% 100%, rgba(6, 182, 212, .20), transparent 30%),
+                #030712;
+        }
+
+        /* =========================
+           BACKGROUND
+        ========================== */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(4px);
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb-one {
+            width: 300px;
+            height: 300px;
+
+            top: 5%;
+            left: 3%;
+
+            background: #2563eb;
+
+            box-shadow: 0 0 110px #2563eb;
+        }
+
+        .orb-two {
+            width: 240px;
+            height: 240px;
+
+            top: 12%;
+            right: 5%;
+
+            background: #7c3aed;
+
+            box-shadow: 0 0 110px #7c3aed;
+
+            animation-delay: -3s;
+        }
+
+        .orb-three {
+            width: 210px;
+            height: 210px;
+
+            bottom: -80px;
+            left: 44%;
+
+            background: #06b6d4;
+
+            box-shadow: 0 0 90px #06b6d4;
+
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-25px);
+            }
+        }
+
+        /* =========================
+           PARTICLES
+        ========================== */
+
+        .dot {
+            position: fixed;
+
+            width: 5px;
+            height: 5px;
+
+            border-radius: 50%;
+
+            background: #60a5fa;
+
+            box-shadow: 0 0 15px #60a5fa;
+
+            animation: dotFloat 6s ease-in-out infinite;
+        }
+
+        .dot1 {
+            top: 20%;
+            left: 30%;
+        }
+
+        .dot2 {
+            top: 70%;
+            left: 15%;
+            animation-delay: -2s;
+        }
+
+        .dot3 {
+            top: 35%;
+            right: 25%;
+            animation-delay: -4s;
+        }
+
+        .dot4 {
+            bottom: 15%;
+            right: 18%;
+            animation-delay: -1s;
+        }
+
+        @keyframes dotFloat {
+
+            0%, 100% {
+                transform: translateY(0);
+                opacity: .3;
+            }
+
+            50% {
+                transform: translateY(-25px);
+                opacity: 1;
+            }
+        }
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        .navbar {
+            position: relative;
+            z-index: 10;
+
+            padding: 22px 6%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            color: white;
+            text-decoration: none;
+
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .brand span {
+            color: #8b5cf6;
+        }
+
+        .home-link {
+            color: #cbd5e1;
+
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            border-radius: 30px;
+
+            border: 1px solid rgba(255,255,255,.15);
+
+            background: rgba(255,255,255,.05);
+
+            backdrop-filter: blur(12px);
+
+            transition: .3s;
+        }
+
+        .home-link:hover {
+            color: white;
+
+            background: rgba(139,92,246,.15);
+
+            border-color: #8b5cf6;
+
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           LOGIN AREA
+        ========================== */
+
+        .page {
+            position: relative;
+            z-index: 5;
+
+            min-height: calc(100vh - 85px);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+
+            perspective: 1200px;
+        }
+
+        /* =========================
+           3D CARD
+        ========================== */
+
+        .login-card {
+
+            width: 100%;
+            max-width: 450px;
+
+            padding: 42px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.13),
+                    rgba(255,255,255,.035)
+                );
+
+            border: 1px solid rgba(255,255,255,.16);
+
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 35px 100px rgba(0,0,0,.55),
+                inset 0 1px 1px rgba(255,255,255,.18),
+                0 0 60px rgba(124,58,237,.12);
+
+            transform-style: preserve-3d;
+
+            transition: transform .15s ease;
+        }
+
+        .login-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: -1px;
+            left: 15%;
+            right: 15%;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #3b82f6,
+                    #8b5cf6,
+                    transparent
+                );
+
+            box-shadow:
+                0 0 20px #6366f1;
+
+            border-radius: 50%;
+        }
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        .header {
+            text-align: center;
+
+            margin-bottom: 30px;
+
+            transform: translateZ(35px);
+        }
+
+        .icon {
+
+            width: 82px;
+            height: 82px;
+
+            margin: auto;
+            margin-bottom: 18px;
+
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: Arial, sans-serif;
+
+            font-size: 40px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(59,130,246,.3),
+                    rgba(139,92,246,.3)
+                );
+
+            border: 1px solid rgba(255,255,255,.18);
+
+            box-shadow:
+                0 15px 40px rgba(124,58,237,.3),
+                inset 0 1px 1px rgba(255,255,255,.2);
+
+            animation: iconFloat 4s ease-in-out infinite;
         }
 
-        .login-card {
+        @keyframes iconFloat {
+
+            0%,100% {
+                transform: translateY(0) rotateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px) rotateY(8deg);
+            }
+        }
+
+        h1 {
+
+            font-size: 38px;
+
+            margin-bottom: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #60a5fa,
+                    #a78bfa,
+                    #c4b5fd
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 15px;
+        }
+
+        /* =========================
+           FLASH MESSAGE
+        ========================== */
+
+        .flash {
+
+            padding: 13px 15px;
+
+            margin-bottom: 20px;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            backdrop-filter: blur(10px);
+        }
+
+        .flash.success {
+
+            color: #86efac;
+
+            background: rgba(34,197,94,.12);
+
+            border: 1px solid rgba(34,197,94,.35);
+        }
+
+        .flash.error {
+
+            color: #fca5a5;
+
+            background: rgba(239,68,68,.12);
+
+            border: 1px solid rgba(239,68,68,.35);
+        }
+
+        .flash.danger {
+
+            color: #fca5a5;
+
+            background: rgba(239,68,68,.12);
+
+            border: 1px solid rgba(239,68,68,.35);
+        }
+
+        /* =========================
+           FORM
+        ========================== */
+
+        .form-group {
+
+            margin-bottom: 22px;
+
+            transform: translateZ(20px);
+        }
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #e2e8f0;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+        input {
+
             width: 100%;
-            max-width: 420px;
-            border: none;
-            border-radius: 15px;
-            overflow: hidden;
-        }
 
-        .login-header {
-            background: #0d6efd;
+            height: 52px;
+
+            padding: 12px 15px;
+
+            border-radius: 13px;
+
+            border: 1px solid rgba(255,255,255,.13);
+
+            outline: none;
+
             color: white;
-            padding: 25px;
-            text-align: center;
+
+            font-size: 15px;
+
+            background: rgba(15,23,42,.65);
+
+            transition: .3s;
         }
 
-        .login-header h2 {
-            margin: 0;
-            font-weight: bold;
+        input::placeholder {
+            color: #64748b;
         }
 
-        .login-body {
-            padding: 30px;
+        input:focus {
+
+            border-color: #6366f1;
+
+            background: rgba(15,23,42,.9);
+
+            box-shadow:
+                0 0 0 3px rgba(99,102,241,.13),
+                0 0 25px rgba(99,102,241,.12);
         }
 
-        .form-control {
-            padding: 12px;
-            border-radius: 8px;
-        }
+        /* =========================
+           BUTTON
+        ========================== */
 
         .login-btn {
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: bold;
+
+            width: 100%;
+
+            height: 56px;
+
+            margin-top: 5px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 12px 30px rgba(79,70,229,.35),
+                inset 0 1px 1px rgba(255,255,255,.25);
+
+            transform: translateZ(30px);
+
+            transition: .3s;
         }
 
-        .back-link {
-            text-decoration: none;
+        .login-btn:hover {
+
+            transform:
+                translateZ(30px)
+                translateY(-4px);
+
+            box-shadow:
+                0 18px 40px rgba(79,70,229,.5),
+                0 0 30px rgba(99,102,241,.2);
         }
+
+        /* =========================
+           BACK HOME
+        ========================== */
+
+        .back-home {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid rgba(255,255,255,.10);
+        }
+
+        .back-home a {
+
+            color: #94a3b8;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition: .3s;
+        }
+
+        .back-home a:hover {
+
+            color: #a78bfa;
+
+            text-shadow:
+                0 0 15px rgba(139,92,246,.5);
+        }
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 600px) {
+
+            body {
+                overflow-y: auto;
+            }
+
+            .navbar {
+                padding: 18px 20px;
+            }
+
+            .brand {
+                font-size: 16px;
+            }
+
+            .page {
+                min-height: calc(100vh - 75px);
+                padding: 15px;
+            }
+
+            .login-card {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .icon {
+                width: 68px;
+                height: 68px;
+                font-size: 34px;
+            }
+
+            .orb-one {
+                width: 180px;
+                height: 180px;
+            }
+
+            .orb-two {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
-    <div class="card shadow-lg login-card">
+    <!-- BACKGROUND -->
 
-        <!-- Header -->
-        <div class="login-header">
-            <h2>Admin Login</h2>
-            <p class="mb-0">Campus Placement System</p>
-        </div>
+    <div class="background">
 
-        <!-- Body -->
-        <div class="login-body">
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="orb orb-three"></div>
 
-            <form method="POST" action="/admin-login">
+    </div>
 
-                <!-- Username -->
-                <div class="mb-3">
-                    <label for="username" class="form-label">
+
+    <!-- PARTICLES -->
+
+    <div class="dot dot1"></div>
+    <div class="dot dot2"></div>
+    <div class="dot dot3"></div>
+    <div class="dot dot4"></div>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <a
+            href="{{ url_for('home') }}"
+            class="brand"
+        >
+            Campus <span>Placement</span>
+        </a>
+
+        <a
+            href="{{ url_for('home') }}"
+            class="home-link"
+        >
+            ← Home
+        </a>
+
+    </nav>
+
+
+    <!-- LOGIN PAGE -->
+
+    <main class="page">
+
+        <div
+            class="login-card"
+            id="loginCard"
+        >
+
+            <!-- HEADER -->
+
+            <div class="header">
+
+                <div class="icon">
+                    🔐
+                </div>
+
+                <h1>
+                    Admin Login
+                </h1>
+
+                <p class="subtitle">
+                    Access the Campus Placement Admin Panel
+                </p>
+
+            </div>
+
+
+            <!-- FLASH MESSAGES -->
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    {% for category, message in messages %}
+
+                        <div class="flash {{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <!-- LOGIN FORM -->
+
+            <form
+                method="POST"
+                action="{{ url_for('admin_login') }}"
+            >
+
+                <!-- USERNAME -->
+
+                <div class="form-group">
+
+                    <label for="username">
                         Username
                     </label>
 
@@ -89,15 +721,19 @@
                         type="text"
                         id="username"
                         name="username"
-                        class="form-control"
                         placeholder="Enter admin username"
+                        autocomplete="username"
                         required
                     >
+
                 </div>
 
-                <!-- Password -->
-                <div class="mb-3">
-                    <label for="password" class="form-label">
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
                         Password
                     </label>
 
@@ -105,26 +741,31 @@
                         type="password"
                         id="password"
                         name="password"
-                        class="form-control"
-                        placeholder="Enter password"
+                        placeholder="Enter admin password"
+                        autocomplete="current-password"
                         required
                     >
+
                 </div>
 
-                <!-- Login Button -->
+
+                <!-- LOGIN BUTTON -->
+
                 <button
                     type="submit"
-                    class="btn btn-primary w-100 login-btn"
+                    class="login-btn"
                 >
-                    Login
+                    🔐 &nbsp; Admin Login
                 </button>
 
             </form>
 
-            <!-- Back to Home -->
-            <div class="text-center mt-4">
 
-                <a href="/" class="back-link">
+            <!-- HOME -->
+
+            <div class="back-home">
+
+                <a href="{{ url_for('home') }}">
                     ← Back to Home
                 </a>
 
@@ -132,7 +773,51 @@
 
         </div>
 
-    </div>
+    </main>
+
+
+    <!-- 3D MOUSE EFFECT -->
+
+    <script>
+
+        const card =
+            document.getElementById("loginCard");
+
+        document.addEventListener(
+            "mousemove",
+            function(event) {
+
+                const x =
+                    event.clientX / window.innerWidth;
+
+                const y =
+                    event.clientY / window.innerHeight;
+
+                const rotateY =
+                    (x - 0.5) * 7;
+
+                const rotateX =
+                    (0.5 - y) * 7;
+
+                card.style.transform =
+                    `rotateX(${rotateX}deg)
+                     rotateY(${rotateY}deg)`;
+
+            }
+        );
+
+
+        document.addEventListener(
+            "mouseleave",
+            function() {
+
+                card.style.transform =
+                    "rotateX(0deg) rotateY(0deg)";
+
+            }
+        );
+
+    </script>
 
 </body>
 

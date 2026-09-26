@@ -60,6 +60,7 @@ def student_register():
         phone = request.form.get("phone", "").strip()
         department = request.form.get("department", "").strip()
         year = request.form.get("year", "").strip()
+        cgpa = request.form.get("cgpa", "").strip()
         password = request.form.get("password", "").strip()
 
         # Check fields

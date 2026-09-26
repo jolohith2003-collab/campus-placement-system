@@ -8,334 +8,818 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Student Management - Campus Placement System</title>
+    <title>Student Management - Campus Placement</title>
 
     <style>
 
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #222;
+        html {
+            scroll-behavior: smooth;
         }
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            min-height: 100vh;
+
+            color: #ffffff;
+
+            background:
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(0, 119, 255, 0.20),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(123, 47, 255, 0.20),
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #020617,
+                    #071329,
+                    #030712
+                );
+
+            overflow-x: hidden;
+        }
+
+
+        /* =========================
+           BACKGROUND GLOWS
+        ========================= */
+
+        .glow {
+            position: fixed;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            filter: blur(90px);
+
+            opacity: 0.35;
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+        .glow-one {
+
+            background: #0066ff;
+
+            top: 80px;
+            left: -120px;
+        }
+
+        .glow-two {
+
+            background: #7c3aed;
+
+            right: -120px;
+            top: 350px;
+        }
+
+        .glow-three {
+
+            background: #00d9ff;
+
+            bottom: -150px;
+            left: 40%;
+        }
+
 
         /* =========================
            NAVBAR
-        ========================== */
+        ========================= */
 
         .navbar {
-            background: #2563eb;
-            color: white;
-            padding: 18px 6%;
+
+            position: relative;
+
+            z-index: 10;
+
+            width: 92%;
+
+            margin: 20px auto;
+
+            padding: 18px 25px;
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
+            border: 1px solid
+                rgba(255,255,255,0.12);
+
+            border-radius: 20px;
+
+            background:
+                rgba(15, 23, 42, 0.65);
+
+            backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,0.35);
+
+            transform:
+                translateZ(20px);
         }
 
-        .navbar h2 {
-            margin: 0;
+
+        .logo {
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #60a5fa,
+                    #a78bfa,
+                    #22d3ee
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
         }
+
 
         .navbar-links {
+
             display: flex;
-            gap: 10px;
-            align-items: center;
+
+            gap: 12px;
         }
 
-        .navbar a {
-            color: white;
+
+        .navbar-links a {
+
             text-decoration: none;
-            background: #1d4ed8;
-            padding: 10px 16px;
-            border-radius: 7px;
+
+            color: #ffffff;
+
+            padding: 10px 18px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            transition: 0.3s ease;
         }
 
-        .navbar a:hover {
-            background: #1e40af;
+
+        .navbar-links a:hover {
+
+            transform:
+                translateY(-3px);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(37,99,235,0.35);
         }
+
 
         /* =========================
-           CONTAINER
-        ========================== */
+           MAIN
+        ========================= */
 
         .container {
+
+            position: relative;
+
+            z-index: 2;
+
             width: 92%;
-            max-width: 1400px;
-            margin: 40px auto;
+
+            max-width: 1500px;
+
+            margin: 50px auto 80px;
         }
 
-        h1 {
-            margin-bottom: 5px;
-            color: #1d4ed8;
+
+        .page-heading {
+
+            margin-bottom: 30px;
         }
+
+
+        .page-heading h1 {
+
+            font-size: 52px;
+
+            line-height: 1.1;
+
+            margin-bottom: 12px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #60a5fa,
+                    #c084fc
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            text-shadow:
+                0 0 30px
+                rgba(96,165,250,0.15);
+        }
+
 
         .subtitle {
-            color: #666;
-            margin-bottom: 25px;
+
+            color: #94a3b8;
+
+            font-size: 17px;
         }
+
 
         /* =========================
-           FLASH MESSAGE
-        ========================== */
+           FLASH
+        ========================= */
 
         .flash {
-            padding: 14px 18px;
+
+            padding: 15px 20px;
+
             margin-bottom: 20px;
-            border-radius: 8px;
-            font-weight: bold;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            backdrop-filter: blur(15px);
         }
 
-        .success {
-            background: #dcfce7;
-            color: #166534;
+
+        .flash.success {
+
+            border-color:
+                rgba(34,197,94,0.45);
+
+            color: #86efac;
         }
 
-        .error {
-            background: #fee2e2;
-            color: #991b1b;
+
+        .flash.error {
+
+            border-color:
+                rgba(239,68,68,0.45);
+
+            color: #fca5a5;
         }
+
+
+        /* =========================
+           GLASS CARD
+        ========================= */
+
+        .glass-card {
+
+            position: relative;
+
+            padding: 25px;
+
+            margin-bottom: 28px;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.10),
+                    rgba(255,255,255,0.04)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 25px 70px
+                rgba(0,0,0,0.35);
+
+            transition:
+                transform 0.35s ease,
+                box-shadow 0.35s ease;
+        }
+
+
+        .glass-card:hover {
+
+            transform:
+                translateY(-5px);
+
+            box-shadow:
+                0 35px 90px
+                rgba(0,0,0,0.45);
+        }
+
 
         /* =========================
            SEARCH
-        ========================== */
-
-        .search-card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
-        }
+        ========================= */
 
         .search-box {
+
             display: flex;
-            gap: 10px;
+
+            gap: 12px;
+
+            align-items: center;
         }
+
 
         .search-box input {
+
             flex: 1;
-            padding: 12px 15px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
-            font-size: 15px;
+
+            min-width: 0;
+
+            padding: 16px 18px;
+
+            border-radius: 14px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.15);
+
+            outline: none;
+
+            color: #ffffff;
+
+            background:
+                rgba(2,6,23,0.60);
+
+            font-size: 16px;
+
+            transition: 0.3s ease;
         }
+
+
+        .search-box input::placeholder {
+
+            color: #64748b;
+        }
+
 
         .search-box input:focus {
-            outline: none;
-            border-color: #2563eb;
+
+            border-color: #60a5fa;
+
+            box-shadow:
+                0 0 25px
+                rgba(59,130,246,0.20);
         }
+
+
+        .search-btn,
+        .clear-btn {
+
+            border: none;
+
+            padding: 15px 22px;
+
+            border-radius: 13px;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            transition: 0.3s ease;
+        }
+
 
         .search-btn {
-            background: #2563eb;
+
             color: white;
-            border: none;
-            padding: 12px 22px;
-            border-radius: 7px;
-            cursor: pointer;
-            font-weight: bold;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(37,99,235,0.25);
         }
 
-        .search-btn:hover {
-            background: #1d4ed8;
-        }
 
         .clear-btn {
-            background: #6b7280;
+
             color: white;
-            text-decoration: none;
-            padding: 12px 22px;
-            border-radius: 7px;
-            display: inline-block;
+
+            background:
+                rgba(255,255,255,0.10);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
         }
 
+
+        .search-btn:hover,
         .clear-btn:hover {
-            background: #4b5563;
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 15px 35px
+                rgba(59,130,246,0.30);
         }
+
 
         /* =========================
            TABLE
-        ========================== */
+        ========================= */
 
-        .table-container {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        .table-wrapper {
+
+            width: 100%;
+
             overflow-x: auto;
+
+            border-radius: 18px;
         }
+
 
         table {
+
             width: 100%;
-            border-collapse: collapse;
-            min-width: 1050px;
+
+            min-width: 1100px;
+
+            border-collapse: separate;
+
+            border-spacing: 0 10px;
         }
 
-        th {
-            background: #2563eb;
-            color: white;
-            padding: 14px;
+
+        thead th {
+
+            padding: 17px 15px;
+
             text-align: left;
-            white-space: nowrap;
+
+            color: #ffffff;
+
+            font-size: 14px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #4f46e5
+                );
+
+            border: none;
         }
 
-        td {
-            padding: 14px;
-            border-bottom: 1px solid #ddd;
-            vertical-align: middle;
+
+        thead th:first-child {
+
+            border-radius: 12px 0 0 12px;
         }
 
-        tr:hover {
-            background: #f8fafc;
+
+        thead th:last-child {
+
+            border-radius: 0 12px 12px 0;
         }
 
-        /* =========================
-           STUDENT NAME
-        ========================== */
+
+        tbody tr {
+
+            transition:
+                transform 0.3s ease;
+        }
+
+
+        tbody tr:hover {
+
+            transform:
+                translateY(-3px);
+        }
+
+
+        tbody td {
+
+            padding: 18px 15px;
+
+            color: #e2e8f0;
+
+            background:
+                rgba(15,23,42,0.72);
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.07);
+        }
+
+
+        tbody td:first-child {
+
+            border-left:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius:
+                14px 0 0 14px;
+        }
+
+
+        tbody td:last-child {
+
+            border-right:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            border-radius:
+                0 14px 14px 0;
+        }
+
 
         .student-name {
-            font-weight: bold;
-            color: #1d4ed8;
+
+            font-weight: 700;
+
+            color: #60a5fa;
+
+            font-size: 16px;
+
+            margin-bottom: 4px;
         }
+
 
         .student-id {
-            color: #777;
-            font-size: 13px;
-            margin-top: 3px;
+
+            font-size: 12px;
+
+            color: #64748b;
         }
+
 
         /* =========================
-           BUTTONS
-        ========================== */
+           ACTION BUTTONS
+        ========================= */
 
         .action-buttons {
+
             display: flex;
-            gap: 6px;
+
+            gap: 8px;
+
             align-items: center;
+
             flex-wrap: wrap;
         }
+
 
         .view-btn,
         .edit-btn,
         .delete-btn {
+
             border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
+
             text-decoration: none;
+
+            padding: 10px 14px;
+
+            border-radius: 10px;
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s ease;
+
             display: inline-block;
-            white-space: nowrap;
         }
 
-        /* View */
 
         .view-btn {
-            background: #2563eb;
-            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
         }
 
-        .view-btn:hover {
-            background: #1d4ed8;
-        }
-
-        /* Edit */
 
         .edit-btn {
-            background: #f59e0b;
-            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f59e0b,
+                    #f97316
+                );
         }
 
-        .edit-btn:hover {
-            background: #d97706;
-        }
-
-        /* Delete */
 
         .delete-btn {
-            background: #dc2626;
-            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ef4444,
+                    #dc2626
+                );
         }
 
+
+        .view-btn:hover,
+        .edit-btn:hover,
         .delete-btn:hover {
-            background: #b91c1c;
+
+            transform:
+                translateY(-3px)
+                scale(1.03);
+
+            box-shadow:
+                0 10px 25px
+                rgba(0,0,0,0.30);
         }
+
 
         /* =========================
-           EMPTY
-        ========================== */
+           EMPTY STATE
+        ========================= */
 
-        .empty {
-            background: white;
-            padding: 50px;
+        .empty-state {
+
             text-align: center;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            padding: 70px 20px;
+
+            color: #94a3b8;
         }
 
-        .empty h2 {
-            color: #555;
+
+        .empty-state .icon {
+
+            font-size: 60px;
+
+            margin-bottom: 15px;
         }
 
-        .empty p {
-            color: #777;
+
+        .empty-state h3 {
+
+            color: white;
+
+            font-size: 25px;
+
+            margin-bottom: 8px;
         }
+
 
         /* =========================
            BACK BUTTON
-        ========================== */
+        ========================= */
 
         .back-btn {
+
             display: inline-block;
-            margin-top: 25px;
-            background: #6b7280;
-            color: white;
+
             text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 7px;
+
+            color: white;
+
+            padding: 14px 22px;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #334155,
+                    #475569
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            transition: 0.3s ease;
         }
 
+
         .back-btn:hover {
-            background: #4b5563;
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 15px 30px
+                rgba(0,0,0,0.30);
         }
+
 
         /* =========================
            MOBILE
-        ========================== */
+        ========================= */
 
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
 
             .navbar {
-                padding: 15px 4%;
+
                 flex-direction: column;
+
                 gap: 15px;
+
                 align-items: flex-start;
             }
 
             .navbar-links {
+
                 width: 100%;
-                flex-wrap: wrap;
             }
 
-            .container {
-                width: 95%;
-                margin: 25px auto;
+            .page-heading h1 {
+
+                font-size: 38px;
             }
 
             .search-box {
+
                 flex-direction: column;
             }
 
+            .search-box input,
             .search-btn,
             .clear-btn {
-                text-align: center;
+
                 width: 100%;
             }
 
+            .glass-card {
+
+                padding: 18px;
+            }
         }
 
     </style>
@@ -346,50 +830,59 @@
 <body>
 
 
+<!-- BACKGROUND EFFECTS -->
+
+<div class="glow glow-one"></div>
+<div class="glow glow-two"></div>
+<div class="glow glow-three"></div>
+
+
 <!-- =========================
      NAVBAR
-========================== -->
+========================= -->
 
-<div class="navbar">
+<nav class="navbar">
 
-    <h2>
+    <div class="logo">
         Campus Placement System - Admin
-    </h2>
+    </div>
 
     <div class="navbar-links">
 
         <a href="{{ url_for('admin_dashboard') }}">
-            Dashboard
+            🏠 Dashboard
         </a>
 
         <a href="{{ url_for('admin_logout') }}">
-            Logout
+            🚪 Logout
         </a>
 
     </div>
 
-</div>
+</nav>
 
 
 <!-- =========================
-     MAIN CONTENT
-========================== -->
+     MAIN
+========================= -->
 
-<div class="container">
-
-
-    <h1>
-        👨‍🎓 Student Management
-    </h1>
-
-    <p class="subtitle">
-        View, search, edit and manage registered students.
-    </p>
+<main class="container">
 
 
-    <!-- =========================
-         FLASH MESSAGES
-    ========================== -->
+    <div class="page-heading">
+
+        <h1>
+            👨‍🎓 Student Management
+        </h1>
+
+        <p class="subtitle">
+            View, search, edit and manage registered students.
+        </p>
+
+    </div>
+
+
+    <!-- FLASH MESSAGES -->
 
     {% with messages = get_flashed_messages(with_categories=true) %}
 
@@ -409,10 +902,10 @@
 
 
     <!-- =========================
-         SEARCH
-    ========================== -->
+         SEARCH CARD
+    ========================= -->
 
-    <div class="search-card">
+    <section class="glass-card">
 
         <form
             method="GET"
@@ -434,233 +927,230 @@
                 🔍 Search
             </button>
 
+
             {% if search %}
 
                 <a
                     href="{{ url_for('student_management') }}"
                     class="clear-btn"
                 >
-                    Clear
+                    ✕ Clear
                 </a>
 
             {% endif %}
 
         </form>
 
-    </div>
+    </section>
 
 
     <!-- =========================
          STUDENT TABLE
-    ========================== -->
+    ========================= -->
 
-    {% if students %}
-
-        <div class="table-container">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            ID
-                        </th>
-
-                        <th>
-                            Student
-                        </th>
-
-                        <th>
-                            Register No
-                        </th>
-
-                        <th>
-                            Email
-                        </th>
-
-                        <th>
-                            Phone
-                        </th>
-
-                        <th>
-                            Department
-                        </th>
-
-                        <th>
-                            Year
-                        </th>
-
-                        <th>
-                            Action
-                        </th>
-
-                    </tr>
-
-                </thead>
+    <section class="glass-card">
 
 
-                <tbody>
-
-                    {% for student in students %}
-
-                    <tr>
-
-                        <!-- ID -->
-
-                        <td>
-                            {{ student.id }}
-                        </td>
+        {% if students %}
 
 
-                        <!-- NAME -->
+            <div class="table-wrapper">
 
-                        <td>
+                <table>
 
-                            <div class="student-name">
-                                {{ student.name }}
-                            </div>
+                    <thead>
 
-                            <div class="student-id">
-                                Student ID: {{ student.id }}
-                            </div>
+                        <tr>
 
-                        </td>
+                            <th>
+                                ID
+                            </th>
 
+                            <th>
+                                Student
+                            </th>
 
-                        <!-- REGISTER NUMBER -->
+                            <th>
+                                Register No
+                            </th>
 
-                        <td>
-                            {{ student.register_no }}
-                        </td>
+                            <th>
+                                Email
+                            </th>
 
+                            <th>
+                                Phone
+                            </th>
 
-                        <!-- EMAIL -->
+                            <th>
+                                Department
+                            </th>
 
-                        <td>
-                            {{ student.email }}
-                        </td>
+                            <th>
+                                Year
+                            </th>
 
+                            <th>
+                                Action
+                            </th>
 
-                        <!-- PHONE -->
+                        </tr>
 
-                        <td>
-                            {{ student.phone }}
-                        </td>
-
-
-                        <!-- DEPARTMENT -->
-
-                        <td>
-                            {{ student.department }}
-                        </td>
-
-
-                        <!-- YEAR -->
-
-                        <td>
-                            {{ student.year }}
-                        </td>
+                    </thead>
 
 
-                        <!-- ACTION -->
-
-                        <td>
-
-                            <div class="action-buttons">
+                    <tbody>
 
 
-                                <!-- VIEW PROFILE -->
+                        {% for student in students %}
 
-                                <a
-                                    href="{{ url_for('student_profile', student_id=student.id) }}"
-                                    class="view-btn"
-                                >
-                                    👁 View
-                                </a>
+                        <tr>
 
 
-                                <!-- EDIT -->
+                            <!-- ID -->
 
-                                <a
-                                    href="{{ url_for('edit_student', student_id=student.id) }}"
-                                    class="edit-btn"
-                                >
-                                    ✏️ Edit
-                                </a>
+                            <td>
+                                {{ student.id }}
+                            </td>
 
 
-                                <!-- DELETE -->
+                            <!-- NAME -->
 
-                                <form
-                                    method="POST"
-                                    action="{{ url_for('delete_student', student_id=student.id) }}"
-                                    style="display:inline;"
-                                    onsubmit="return confirm('Are you sure you want to delete {{ student.name }}? This will also delete this student\\'s applications.');"
-                                >
+                            <td>
 
-                                    <button
-                                        type="submit"
-                                        class="delete-btn"
+                                <div class="student-name">
+                                    {{ student.name }}
+                                </div>
+
+                                <div class="student-id">
+                                    Student ID: {{ student.id }}
+                                </div>
+
+                            </td>
+
+
+                            <!-- REGISTER -->
+
+                            <td>
+                                {{ student.register_no }}
+                            </td>
+
+
+                            <!-- EMAIL -->
+
+                            <td>
+                                {{ student.email }}
+                            </td>
+
+
+                            <!-- PHONE -->
+
+                            <td>
+                                {{ student.phone }}
+                            </td>
+
+
+                            <!-- DEPARTMENT -->
+
+                            <td>
+                                {{ student.department }}
+                            </td>
+
+
+                            <!-- YEAR -->
+
+                            <td>
+                                {{ student.year }}
+                            </td>
+
+
+                            <!-- ACTION -->
+
+                            <td>
+
+                                <div class="action-buttons">
+
+
+                                    <!-- VIEW -->
+
+                                    <a
+                                        href="{{ url_for('student_profile', student_id=student.id) }}"
+                                        class="view-btn"
                                     >
-                                        🗑 Delete
-                                    </button>
-
-                                </form>
+                                        👁 View
+                                    </a>
 
 
-                            </div>
+                                    <!-- EDIT -->
 
-                        </td>
-
-                    </tr>
-
-                    {% endfor %}
-
-                </tbody>
-
-            </table>
-
-        </div>
+                                    <a
+                                        href="{{ url_for('edit_student', student_id=student.id) }}"
+                                        class="edit-btn"
+                                    >
+                                        ✏️ Edit
+                                    </a>
 
 
-    {% else %}
+                                    <!-- DELETE -->
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for('delete_student', student_id=student.id) }}"
+                                        style="display:inline;"
+                                        onsubmit="return confirm('Are you sure you want to delete {{ student.name }}? This will also delete this student\\'s applications.');"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="delete-btn"
+                                        >
+                                            🗑 Delete
+                                        </button>
+
+                                    </form>
 
 
-        <!-- =========================
-             NO STUDENTS
-        ========================== -->
+                                </div>
 
-        <div class="empty">
+                            </td>
 
-            <h2>
-                {% if search %}
+
+                        </tr>
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        {% else %}
+
+
+            <div class="empty-state">
+
+                <div class="icon">
+                    🎓
+                </div>
+
+                <h3>
                     No Students Found
-                {% else %}
-                    No Students Registered
-                {% endif %}
-            </h2>
+                </h3>
 
-            <p>
+                <p>
+                    No registered students match your search.
+                </p>
 
-                {% if search %}
-
-                    No students match your search:
-                    <strong>{{ search }}</strong>
-
-                {% else %}
-
-                    No students have registered in the placement system yet.
-
-                {% endif %}
-
-            </p>
-
-        </div>
+            </div>
 
 
-    {% endif %}
+        {% endif %}
+
+
+    </section>
 
 
     <!-- BACK -->
@@ -673,7 +1163,69 @@
     </a>
 
 
-</div>
+</main>
+
+
+<!-- =========================
+     3D MOUSE EFFECT
+========================= -->
+
+<script>
+
+    const cards =
+        document.querySelectorAll(".glass-card");
+
+
+    cards.forEach((card) => {
+
+        card.addEventListener(
+            "mousemove",
+            (event) => {
+
+                const rect =
+                    card.getBoundingClientRect();
+
+                const x =
+                    event.clientX - rect.left;
+
+                const y =
+                    event.clientY - rect.top;
+
+                const centerX =
+                    rect.width / 2;
+
+                const centerY =
+                    rect.height / 2;
+
+                const rotateX =
+                    ((y - centerY) / centerY) * -1.2;
+
+                const rotateY =
+                    ((x - centerX) / centerX) * 1.2;
+
+                card.style.transform =
+                    `translateY(-5px)
+                     perspective(1000px)
+                     rotateX(${rotateX}deg)
+                     rotateY(${rotateY}deg)`;
+
+            }
+        );
+
+
+        card.addEventListener(
+            "mouseleave",
+            () => {
+
+                card.style.transform =
+                    "translateY(0) perspective(1000px) rotateX(0) rotateY(0)";
+
+            }
+        );
+
+    });
+
+</script>
 
 
 </body>

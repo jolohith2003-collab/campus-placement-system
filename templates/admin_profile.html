@@ -1,139 +1,588 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Admin Profile - Campus Placement System</title>
+    <title>Admin Profile | Campus Placement</title>
 
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #222;
+
+        * {
+            box-sizing: border-box;
         }
 
-        .navbar {
-            background: #2563eb;
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: Arial, sans-serif;
             color: white;
-            padding: 18px 7%;
+
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(0, 153, 255, 0.20),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(139, 92, 246, 0.20),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #020617,
+                    #071329,
+                    #020617
+                );
+
+            overflow-x: hidden;
+        }
+
+
+        /* =========================
+           BACKGROUND GLOWS
+        ========================= */
+
+        .glow {
+            position: fixed;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            filter: blur(90px);
+
+            opacity: 0.25;
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+        .glow-one {
+            background: #008cff;
+
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-two {
+            background: #8b5cf6;
+
+            right: -100px;
+            bottom: -100px;
+        }
+
+        .glow-three {
+            background: #06b6d4;
+
+            width: 180px;
+            height: 180px;
+
+            top: 45%;
+            left: 50%;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            position: relative;
+            z-index: 10;
+
+            width: 92%;
+
+            margin: 20px auto;
+
+            padding: 16px 24px;
+
             display: flex;
             justify-content: space-between;
             align-items: center;
+
+            border-radius: 20px;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            background:
+                rgba(255,255,255,0.07);
+
+            backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.35);
         }
 
         .navbar h2 {
             margin: 0;
+
+            font-size: 21px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #38bdf8,
+                    #818cf8,
+                    #c084fc
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 10px;
         }
 
         .navbar a {
             color: white;
+
             text-decoration: none;
-            background: #1d4ed8;
-            padding: 10px 18px;
-            border-radius: 6px;
-            margin-left: 8px;
+
+            padding: 9px 16px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid rgba(255,255,255,0.10);
+
+            transition: 0.3s;
         }
+
+        .navbar a:hover {
+            transform: translateY(-3px);
+
+            background:
+                rgba(59,130,246,0.25);
+
+            box-shadow:
+                0 10px 25px rgba(59,130,246,0.2);
+        }
+
+        .navbar .logout {
+            background:
+                linear-gradient(
+                    135deg,
+                    #ef4444,
+                    #b91c1c
+                );
+
+            border: none;
+        }
+
+        .navbar .logout:hover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #f87171,
+                    #dc2626
+                );
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
 
         .container {
-            width: 450px;
-            max-width: 90%;
-            margin: 60px auto;
+            position: relative;
+            z-index: 2;
+
+            width: 92%;
+            max-width: 600px;
+
+            margin: 70px auto 80px;
         }
+
+
+        /* =========================
+           PROFILE CARD
+        ========================= */
 
         .card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 38px;
+
+            border-radius: 28px;
+
+            border:
+                1px solid rgba(255,255,255,0.13);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.12),
+                    rgba(255,255,255,0.045)
+                );
+
+            backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.45);
+
+            transform:
+                perspective(1200px)
+                rotateX(0deg)
+                rotateY(0deg);
+
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.3s ease;
         }
 
-        h1 {
-            margin-top: 0;
-            color: #1d4ed8;
+        .card:hover {
+            box-shadow:
+                0 40px 100px rgba(0,0,0,0.55);
         }
+
+
+        /* =========================
+           PROFILE ICON
+        ========================= */
+
+        .profile-icon {
+            width: 90px;
+            height: 90px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            font-size: 42px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 15px 40px rgba(59,130,246,0.35);
+
+            border:
+                1px solid rgba(255,255,255,0.2);
+        }
+
+
+        /* =========================
+           TITLE
+        ========================= */
+
+        h1 {
+            margin: 0 0 8px;
+
+            text-align: center;
+
+            font-size: 36px;
+
+            font-weight: 800;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #60a5fa,
+                    #c084fc
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #94a3b8;
+
+            margin-bottom: 30px;
+        }
+
+
+        /* =========================
+           FLASH MESSAGE
+        ========================= */
+
+        .message {
+            padding: 13px 15px;
+
+            margin-bottom: 18px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(59,130,246,0.14);
+
+            border:
+                1px solid rgba(59,130,246,0.25);
+
+            color: #bfdbfe;
+
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.15);
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
 
         label {
             display: block;
-            margin-top: 18px;
-            margin-bottom: 7px;
-            font-weight: bold;
+
+            margin-top: 19px;
+            margin-bottom: 8px;
+
+            color: #cbd5e1;
+
+            font-size: 14px;
+
+            font-weight: 600;
         }
 
         input {
             width: 100%;
-            box-sizing: border-box;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
+
+            padding: 14px 15px;
+
+            border-radius: 13px;
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            outline: none;
+
+            background:
+                rgba(15,23,42,0.72);
+
+            color: white;
+
             font-size: 15px;
+
+            transition: 0.3s;
+        }
+
+        input::placeholder {
+            color: #64748b;
+        }
+
+        input:focus {
+            border-color: #60a5fa;
+
+            box-shadow:
+                0 0 0 3px rgba(59,130,246,0.15),
+                0 10px 30px rgba(0,0,0,0.2);
         }
 
         .username {
-            background: #f1f5f9;
+            background:
+                rgba(100,116,139,0.18);
+
+            color: #94a3b8;
+
+            cursor: not-allowed;
         }
+
+
+        /* =========================
+           BUTTON
+        ========================= */
 
         .update-btn {
             width: 100%;
-            margin-top: 25px;
-            padding: 12px;
+
+            margin-top: 28px;
+
+            padding: 15px;
+
             border: none;
-            border-radius: 7px;
-            background: #2563eb;
+
+            border-radius: 14px;
+
             color: white;
+
             font-size: 16px;
-            font-weight: bold;
+
+            font-weight: 700;
+
             cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 12px 30px rgba(59,130,246,0.3);
+
+            transition: 0.3s;
         }
 
         .update-btn:hover {
-            background: #1d4ed8;
+            transform:
+                translateY(-4px)
+                scale(1.01);
+
+            box-shadow:
+                0 18px 40px rgba(124,58,237,0.4);
         }
 
-        .message {
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 7px;
-            background: #dbeafe;
-            color: #1d4ed8;
+        .update-btn:active {
+            transform:
+                translateY(0)
+                scale(0.99);
         }
+
+
+        /* =========================
+           BACK LINK
+        ========================= */
 
         .back {
-            display: inline-block;
-            margin-top: 20px;
-            color: #2563eb;
+            display: block;
+
+            margin-top: 25px;
+
+            text-align: center;
+
+            color: #60a5fa;
+
             text-decoration: none;
+
+            transition: 0.3s;
         }
+
+        .back:hover {
+            color: #c084fc;
+
+            transform: translateX(-3px);
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                width: 94%;
+
+                padding: 14px 16px;
+            }
+
+            .navbar h2 {
+                font-size: 17px;
+            }
+
+            .nav-links {
+                gap: 5px;
+            }
+
+            .navbar a {
+                padding: 8px 10px;
+
+                font-size: 13px;
+            }
+
+            .container {
+                width: 94%;
+
+                margin-top: 45px;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+        }
+
     </style>
+
 </head>
+
 
 <body>
 
+    <!-- Background -->
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+    <div class="glow glow-three"></div>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
     <div class="navbar">
 
-        <h2>Campus Placement System</h2>
+        <h2>
+            Campus Placement
+        </h2>
 
-        <div>
+        <div class="nav-links">
+
             <a href="{{ url_for('admin_dashboard') }}">
                 Dashboard
             </a>
 
-            <a href="{{ url_for('admin_logout') }}">
+            <a
+                href="{{ url_for('admin_logout') }}"
+                class="logout">
                 Logout
             </a>
+
         </div>
 
     </div>
 
 
+    <!-- =========================
+         PROFILE
+    ========================= -->
+
     <div class="container">
 
-        <div class="card">
+        <div class="card" id="profileCard">
 
-            <h1>Admin Profile</h1>
+
+            <div class="profile-icon">
+                👨‍💼
+            </div>
+
+
+            <h1>
+                Admin Profile
+            </h1>
+
+            <div class="subtitle">
+                Manage your administrator account
+            </div>
+
+
+            <!-- FLASH MESSAGES -->
 
             {% with messages = get_flashed_messages() %}
+
                 {% if messages %}
 
                     {% for message in messages %}
@@ -145,12 +594,17 @@
                     {% endfor %}
 
                 {% endif %}
+
             {% endwith %}
 
 
+            <!-- PASSWORD FORM -->
+
             <form method="POST">
 
-                <label>Username</label>
+                <label>
+                    Username
+                </label>
 
                 <input
                     type="text"
@@ -160,7 +614,9 @@
                 >
 
 
-                <label>Current Password</label>
+                <label>
+                    Current Password
+                </label>
 
                 <input
                     type="password"
@@ -170,7 +626,9 @@
                 >
 
 
-                <label>New Password</label>
+                <label>
+                    New Password
+                </label>
 
                 <input
                     type="password"
@@ -180,7 +638,9 @@
                 >
 
 
-                <label>Confirm New Password</label>
+                <label>
+                    Confirm New Password
+                </label>
 
                 <input
                     type="password"
@@ -193,7 +653,9 @@
                 <button
                     type="submit"
                     class="update-btn">
-                    Change Password
+
+                    🔐 Change Password
+
                 </button>
 
             </form>
@@ -202,12 +664,65 @@
             <a
                 href="{{ url_for('admin_dashboard') }}"
                 class="back">
+
                 ← Back to Dashboard
+
             </a>
 
         </div>
 
     </div>
 
+
+    <!-- =========================
+         3D MOUSE EFFECT
+    ========================= -->
+
+    <script>
+
+        const card =
+            document.getElementById("profileCard");
+
+        card.addEventListener("mousemove", function(event) {
+
+            const rect =
+                card.getBoundingClientRect();
+
+            const x =
+                event.clientX - rect.left;
+
+            const y =
+                event.clientY - rect.top;
+
+            const centerX =
+                rect.width / 2;
+
+            const centerY =
+                rect.height / 2;
+
+            const rotateX =
+                ((y - centerY) / centerY) * -5;
+
+            const rotateY =
+                ((x - centerX) / centerX) * 5;
+
+            card.style.transform =
+                `perspective(1200px)
+                 rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)`;
+
+        });
+
+
+        card.addEventListener("mouseleave", function() {
+
+            card.style.transform =
+                "perspective(1200px) rotateX(0deg) rotateY(0deg)";
+
+        });
+
+    </script>
+
 </body>
+
 </html>

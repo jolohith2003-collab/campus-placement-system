@@ -1,477 +1,1136 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Student Registration - Campus Placement System</title>
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+    <title>Student Registration - Campus Placement</title>
 
     <style>
-        body {
+
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
+        }
+
+        body {
             min-height: 100vh;
-            background: linear-gradient(
-                135deg,
-                #eef5ff,
-                #dceaff
-            );
-            font-family: Arial, sans-serif;
-        }
-
-        .register-container {
-            width: 100%;
-            max-width: 750px;
-            margin: 50px auto;
-            background: white;
-            padding: 35px 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        }
-
-        .register-title {
-            text-align: center;
-            color: #2563eb;
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .register-subtitle {
-            text-align: center;
-            color: #64748b;
-            font-size: 17px;
-            margin-bottom: 35px;
-        }
-
-        .form-label {
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 8px;
-        }
-
-        .form-control,
-        .form-select {
-            height: 48px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            padding: 10px 14px;
-            font-size: 16px;
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-        }
-
-        .register-info {
-            background: #f1f5f9;
-            color: #64748b;
-            border-radius: 8px;
-            padding: 13px 15px;
-            font-size: 14px;
-            margin-top: 6px;
-        }
-
-        .register-button {
-            width: 100%;
-            height: 54px;
-            border: none;
-            border-radius: 8px;
-            background: #2563eb;
+            font-family: Arial, Helvetica, sans-serif;
             color: white;
-            font-size: 18px;
-            font-weight: 700;
-            margin-top: 25px;
-            transition: 0.2s;
+            overflow-x: hidden;
+
+            background:
+                radial-gradient(circle at 10% 15%, rgba(37, 99, 235, .35), transparent 28%),
+                radial-gradient(circle at 90% 20%, rgba(124, 58, 237, .35), transparent 30%),
+                radial-gradient(circle at 50% 100%, rgba(6, 182, 212, .22), transparent 30%),
+                #030712;
         }
 
-        .register-button:hover {
-            background: #1d4ed8;
+        /* =========================
+           BACKGROUND
+        ========================== */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        .login-section {
-            text-align: center;
-            border-top: 1px solid #e5e7eb;
-            margin-top: 25px;
-            padding-top: 22px;
-            color: #64748b;
-            font-size: 17px;
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
         }
 
-        .login-section a {
-            color: #2563eb;
-            font-weight: 700;
+        .orb-one {
+            width: 280px;
+            height: 280px;
+
+            top: 5%;
+            left: 3%;
+
+            background: #2563eb;
+
+            filter: blur(3px);
+
+            box-shadow:
+                0 0 100px #2563eb;
+        }
+
+        .orb-two {
+            width: 230px;
+            height: 230px;
+
+            top: 12%;
+            right: 5%;
+
+            background: #7c3aed;
+
+            filter: blur(3px);
+
+            box-shadow:
+                0 0 100px #7c3aed;
+
+            animation-delay: -3s;
+        }
+
+        .orb-three {
+            width: 200px;
+            height: 200px;
+
+            bottom: -70px;
+            left: 45%;
+
+            background: #06b6d4;
+
+            filter: blur(5px);
+
+            box-shadow:
+                0 0 90px #06b6d4;
+
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-25px);
+            }
+
+        }
+
+        /* =========================
+           NAVBAR
+        ========================== */
+
+        .navbar {
+            position: relative;
+            z-index: 10;
+
+            padding: 22px 6%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            color: white;
             text-decoration: none;
+
+            font-size: 20px;
+            font-weight: 700;
         }
 
-        .login-section a:hover {
-            text-decoration: underline;
+        .brand span {
+            color: #8b5cf6;
         }
+
+        .home-link {
+            color: #cbd5e1;
+
+            text-decoration: none;
+
+            padding: 10px 18px;
+
+            border-radius: 30px;
+
+            border: 1px solid rgba(255,255,255,.15);
+
+            background: rgba(255,255,255,.05);
+
+            backdrop-filter: blur(12px);
+
+            transition: .3s;
+        }
+
+        .home-link:hover {
+            color: white;
+
+            background: rgba(139,92,246,.15);
+
+            border-color: #8b5cf6;
+
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           PAGE
+        ========================== */
+
+        .page {
+            position: relative;
+            z-index: 5;
+
+            display: flex;
+            justify-content: center;
+
+            padding: 20px 20px 70px;
+
+            perspective: 1200px;
+        }
+
+        /* =========================
+           3D CARD
+        ========================== */
+
+        .register-card {
+
+            width: 100%;
+            max-width: 850px;
+
+            padding: 42px;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.13),
+                    rgba(255,255,255,.035)
+                );
+
+            border: 1px solid rgba(255,255,255,.16);
+
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 35px 100px rgba(0,0,0,.55),
+                inset 0 1px 1px rgba(255,255,255,.18),
+                0 0 60px rgba(37,99,235,.10);
+
+            transform-style: preserve-3d;
+
+            transition: transform .15s ease;
+        }
+
+        .register-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            top: -1px;
+            left: 15%;
+            right: 15%;
+
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #3b82f6,
+                    #8b5cf6,
+                    transparent
+                );
+
+            box-shadow:
+                0 0 20px #6366f1;
+
+            border-radius: 50%;
+        }
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        .header {
+            text-align: center;
+
+            margin-bottom: 35px;
+
+            transform: translateZ(35px);
+        }
+
+        .icon {
+
+            width: 80px;
+            height: 80px;
+
+            margin: auto;
+            margin-bottom: 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 40px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(59,130,246,.3),
+                    rgba(139,92,246,.3)
+                );
+
+            border: 1px solid rgba(255,255,255,.18);
+
+            box-shadow:
+                0 15px 40px rgba(37,99,235,.3),
+                inset 0 1px 1px rgba(255,255,255,.2);
+
+            animation: iconFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+
+            0%,100% {
+                transform: translateY(0) rotateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px) rotateY(8deg);
+            }
+
+        }
+
+        h1 {
+
+            font-size: 38px;
+
+            margin-bottom: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #60a5fa,
+                    #a78bfa,
+                    #c4b5fd
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 15px;
+        }
+
+        /* =========================
+           FLASH MESSAGE
+        ========================== */
 
         .alert {
-            border-radius: 8px;
+
+            padding: 13px 16px;
+
+            margin-bottom: 20px;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+
+            backdrop-filter: blur(10px);
+        }
+
+        .alert-success {
+
+            color: #86efac;
+
+            background: rgba(34,197,94,.12);
+
+            border: 1px solid rgba(34,197,94,.35);
+        }
+
+        .alert-danger {
+
+            color: #fca5a5;
+
+            background: rgba(239,68,68,.12);
+
+            border: 1px solid rgba(239,68,68,.35);
+        }
+
+        /* =========================
+           FORM
+        ========================== */
+
+        .form-row {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 22px;
+        }
+
+        .form-group {
+
+            margin-bottom: 22px;
+
+            transform: translateZ(20px);
+        }
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #e2e8f0;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
+        input,
+        select {
+
+            width: 100%;
+
+            height: 50px;
+
+            padding: 12px 15px;
+
+            border-radius: 13px;
+
+            border: 1px solid rgba(255,255,255,.13);
+
+            outline: none;
+
+            color: white;
+
+            font-size: 15px;
+
+            background: rgba(15,23,42,.65);
+
+            transition: .3s;
+
+        }
+
+        input::placeholder {
+            color: #64748b;
+        }
+
+        select {
+            color: #cbd5e1;
+        }
+
+        select option {
+            color: #111827;
+            background: white;
+        }
+
+        input:focus,
+        select:focus {
+
+            border-color: #6366f1;
+
+            background: rgba(15,23,42,.9);
+
+            box-shadow:
+                0 0 0 3px rgba(99,102,241,.13),
+                0 0 25px rgba(99,102,241,.12);
         }
 
         .field-help {
-            font-size: 13px;
+
+            margin-top: 7px;
+
             color: #64748b;
-            margin-top: 5px;
+
+            font-size: 11px;
+
+            line-height: 1.5;
         }
 
-        @media (max-width: 768px) {
-            .register-container {
-                margin: 20px;
-                padding: 25px 20px;
+        /* =========================
+           REGISTER INFO
+        ========================== */
+
+        .register-info {
+
+            padding: 14px 16px;
+
+            border-radius: 13px;
+
+            color: #93c5fd;
+
+            background:
+                rgba(37,99,235,.10);
+
+            border: 1px solid rgba(59,130,246,.20);
+
+            font-size: 14px;
+        }
+
+        /* =========================
+           BUTTON
+        ========================== */
+
+        .register-button {
+
+            width: 100%;
+
+            height: 56px;
+
+            margin-top: 10px;
+
+            border: none;
+
+            border-radius: 14px;
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 12px 30px rgba(79,70,229,.35),
+                inset 0 1px 1px rgba(255,255,255,.25);
+
+            transform: translateZ(30px);
+
+            transition: .3s;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .register-button:hover {
+
+            transform:
+                translateZ(30px)
+                translateY(-4px);
+
+            box-shadow:
+                0 18px 40px rgba(79,70,229,.5),
+                0 0 30px rgba(99,102,241,.2);
+        }
+
+        /* =========================
+           LOGIN
+        ========================== */
+
+        .login-section {
+
+            text-align: center;
+
+            margin-top: 28px;
+
+            padding-top: 22px;
+
+            border-top:
+                1px solid rgba(255,255,255,.10);
+
+            color: #94a3b8;
+
+            font-size: 14px;
+        }
+
+        .login-section a {
+
+            color: #8b5cf6;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            transition: .3s;
+        }
+
+        .login-section a:hover {
+
+            color: #c4b5fd;
+
+            text-shadow:
+                0 0 15px rgba(139,92,246,.6);
+        }
+
+        /* =========================
+           PARTICLES
+        ========================== */
+
+        .dot {
+
+            position: fixed;
+
+            width: 5px;
+            height: 5px;
+
+            border-radius: 50%;
+
+            background: #60a5fa;
+
+            box-shadow:
+                0 0 15px #60a5fa;
+
+            animation:
+                dotFloat 6s ease-in-out infinite;
+
+            pointer-events: none;
+        }
+
+        .dot1 {
+            top: 20%;
+            left: 30%;
+        }
+
+        .dot2 {
+            top: 70%;
+            left: 15%;
+            animation-delay: -2s;
+        }
+
+        .dot3 {
+            top: 35%;
+            right: 25%;
+            animation-delay: -4s;
+        }
+
+        .dot4 {
+            bottom: 15%;
+            right: 18%;
+            animation-delay: -1s;
+        }
+
+        @keyframes dotFloat {
+
+            0%,100% {
+                transform: translateY(0);
+                opacity: .3;
             }
 
-            .register-title {
+            50% {
+                transform: translateY(-25px);
+                opacity: 1;
+            }
+
+        }
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 18px 20px;
+            }
+
+            .brand {
+                font-size: 16px;
+            }
+
+            .page {
+                padding: 15px;
+            }
+
+            .register-card {
+                padding: 30px 20px;
+            }
+
+            h1 {
                 font-size: 30px;
             }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .icon {
+                width: 68px;
+                height: 68px;
+                font-size: 34px;
+            }
+
+            .orb-one {
+                width: 180px;
+                height: 180px;
+            }
+
+            .orb-two {
+                width: 150px;
+                height: 150px;
+            }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-<div class="register-container">
+    <!-- BACKGROUND -->
 
-    <!-- TITLE -->
-    <h1 class="register-title">
-        Student Registration
-    </h1>
+    <div class="background">
 
-    <p class="register-subtitle">
-        Create your Campus Placement System account
-    </p>
-
-
-    <!-- FLASH MESSAGES -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div
-                    class="alert
-                    {% if category == 'success' %}
-                        alert-success
-                    {% else %}
-                        alert-danger
-                    {% endif %}"
-                    role="alert"
-                >
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-
-
-    <!-- REGISTRATION FORM -->
-    <form
-        method="POST"
-        action="{{ url_for('student_register') }}"
-    >
-
-        <!-- FULL NAME -->
-        <div class="mb-3">
-            <label class="form-label">
-                Full Name
-            </label>
-
-            <input
-                type="text"
-                name="name"
-                class="form-control"
-                placeholder="Enter your full name"
-                required
-                value="{{ request.form.get('name', '') }}"
-            >
-        </div>
-
-
-        <!-- REGISTER NUMBER -->
-        <div class="mb-3">
-            <label class="form-label">
-                Register Number
-            </label>
-
-            <div class="register-info">
-                <strong>Will be generated automatically</strong>
-            </div>
-
-            <div class="field-help">
-                Your Register Number will be automatically generated
-                after you create your account.
-                Example: <strong>STU0001</strong>
-            </div>
-        </div>
-
-
-        <!-- EMAIL + PHONE -->
-        <div class="row">
-
-            <div class="col-md-6 mb-3">
-
-                <label class="form-label">
-                    Email Address
-                </label>
-
-                <input
-                    type="email"
-                    name="email"
-                    class="form-control"
-                    placeholder="example@gmail.com"
-                    required
-                    value="{{ request.form.get('email', '') }}"
-                >
-
-            </div>
-
-
-            <div class="col-md-6 mb-3">
-
-                <label class="form-label">
-                    Phone Number
-                </label>
-
-                <input
-                    type="tel"
-                    name="phone"
-                    class="form-control"
-                    placeholder="Enter phone number"
-                    maxlength="10"
-                    required
-                    value="{{ request.form.get('phone', '') }}"
-                >
-
-            </div>
-
-        </div>
-
-
-        <!-- DEPARTMENT + YEAR -->
-        <div class="row">
-
-            <div class="col-md-6 mb-3">
-
-                <label class="form-label">
-                    Department
-                </label>
-
-                <select
-                    name="department"
-                    class="form-select"
-                    required
-                >
-                    <option value="">
-                        Select Department
-                    </option>
-
-                    <option value="CSE"
-                        {% if request.form.get('department') == 'CSE' %}
-                            selected
-                        {% endif %}
-                    >
-                        CSE
-                    </option>
-
-                    <option value="IT"
-                        {% if request.form.get('department') == 'IT' %}
-                            selected
-                        {% endif %}
-                    >
-                        IT
-                    </option>
-
-                    <option value="ECE"
-                        {% if request.form.get('department') == 'ECE' %}
-                            selected
-                        {% endif %}
-                    >
-                        ECE
-                    </option>
-
-                    <option value="EEE"
-                        {% if request.form.get('department') == 'EEE' %}
-                            selected
-                        {% endif %}
-                    >
-                        EEE
-                    </option>
-
-                    <option value="MECH"
-                        {% if request.form.get('department') == 'MECH' %}
-                            selected
-                        {% endif %}
-                    >
-                        Mechanical
-                    </option>
-
-                    <option value="CIVIL"
-                        {% if request.form.get('department') == 'CIVIL' %}
-                            selected
-                        {% endif %}
-                    >
-                        Civil
-                    </option>
-
-                    <option value="AI&DS"
-                        {% if request.form.get('department') == 'AI&DS' %}
-                            selected
-                        {% endif %}
-                    >
-                        AI & DS
-                    </option>
-
-                    <option value="AIML"
-                        {% if request.form.get('department') == 'AIML' %}
-                            selected
-                        {% endif %}
-                    >
-                        AI & ML
-                    </option>
-
-                </select>
-
-            </div>
-
-
-            <div class="col-md-6 mb-3">
-
-                <label class="form-label">
-                    Year
-                </label>
-
-                <select
-                    name="year"
-                    class="form-select"
-                    required
-                >
-
-                    <option value="">
-                        Select Year
-                    </option>
-
-                    <option value="1"
-                        {% if request.form.get('year') == '1' %}
-                            selected
-                        {% endif %}
-                    >
-                        1st Year
-                    </option>
-
-                    <option value="2"
-                        {% if request.form.get('year') == '2' %}
-                            selected
-                        {% endif %}
-                    >
-                        2nd Year
-                    </option>
-
-                    <option value="3"
-                        {% if request.form.get('year') == '3' %}
-                            selected
-                        {% endif %}
-                    >
-                        3rd Year
-                    </option>
-
-                    <option value="4"
-                        {% if request.form.get('year') == '4' %}
-                            selected
-                        {% endif %}
-                    >
-                        4th Year
-                    </option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-
-        <!-- CGPA -->
-        <div class="mb-3">
-
-            <label class="form-label">
-                CGPA
-            </label>
-
-            <input
-                type="number"
-                name="cgpa"
-                class="form-control"
-                placeholder="Enter your CGPA"
-                step="0.01"
-                min="0"
-                max="10"
-                required
-                value="{{ request.form.get('cgpa', '') }}"
-            >
-
-            <div class="field-help">
-                Enter your current CGPA between 0 and 10.
-                Example: <strong>8.50</strong>
-            </div>
-
-        </div>
-
-
-        <!-- PASSWORD -->
-        <div class="mb-3">
-
-            <label class="form-label">
-                Password
-            </label>
-
-            <input
-                type="password"
-                name="password"
-                class="form-control"
-                placeholder="Create a password"
-                minlength="4"
-                required
-            >
-
-            <div class="field-help">
-                Password must contain at least 4 characters.
-            </div>
-
-        </div>
-
-
-        <!-- CREATE ACCOUNT -->
-        <button
-            type="submit"
-            class="register-button"
-        >
-            🎓 Create Account
-        </button>
-
-    </form>
-
-
-    <!-- LOGIN -->
-    <div class="login-section">
-
-        Already have an account?
-
-        <a href="{{ url_for('student_login') }}">
-            Login Here
-        </a>
+        <div class="orb orb-one"></div>
+        <div class="orb orb-two"></div>
+        <div class="orb orb-three"></div>
 
     </div>
 
-</div>
+
+    <!-- PARTICLES -->
+
+    <div class="dot dot1"></div>
+    <div class="dot dot2"></div>
+    <div class="dot dot3"></div>
+    <div class="dot dot4"></div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <a href="{{ url_for('home') }}" class="brand">
+            Campus <span>Placement</span>
+        </a>
+
+        <a href="{{ url_for('home') }}" class="home-link">
+            ← Home
+        </a>
+
+    </nav>
+
+
+    <!-- PAGE -->
+
+    <main class="page">
+
+        <div class="register-card" id="registerCard">
+
+
+            <!-- HEADER -->
+
+            <div class="header">
+
+                <div class="icon">
+                    🎓
+                </div>
+
+                <h1>
+                    Student Registration
+                </h1>
+
+                <p class="subtitle">
+                    Create your Campus Placement account
+                </p>
+
+            </div>
+
+
+            <!-- FLASH MESSAGES -->
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    {% for category, message in messages %}
+
+                        <div
+                            class="alert
+                            {% if category == 'success' %}
+                                alert-success
+                            {% else %}
+                                alert-danger
+                            {% endif %}"
+                        >
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+
+            <!-- FORM -->
+
+            <form
+                method="POST"
+                action="{{ url_for('student_register') }}"
+            >
+
+
+                <!-- FULL NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                        value="{{ request.form.get('name', '') }}"
+                    >
+
+                </div>
+
+
+                <!-- REGISTER NUMBER -->
+
+                <div class="form-group">
+
+                    <label>
+                        Register Number
+                    </label>
+
+                    <div class="register-info">
+
+                        <strong>
+                            ✓ Will be generated automatically
+                        </strong>
+
+                    </div>
+
+                    <div class="field-help">
+
+                        Your Register Number will be automatically
+                        generated after you create your account.
+
+                        Example:
+                        <strong>STU0001</strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL + PHONE -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="example@gmail.com"
+                            required
+                            value="{{ request.form.get('email', '') }}"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            name="phone"
+                            placeholder="Enter phone number"
+                            maxlength="10"
+                            required
+                            value="{{ request.form.get('phone', '') }}"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- DEPARTMENT + YEAR -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Department
+                        </label>
+
+                        <select
+                            name="department"
+                            required
+                        >
+
+                            <option value="">
+                                Select Department
+                            </option>
+
+                            <option value="CSE"
+                                {% if request.form.get('department') == 'CSE' %}
+                                    selected
+                                {% endif %}
+                            >
+                                CSE
+                            </option>
+
+                            <option value="IT"
+                                {% if request.form.get('department') == 'IT' %}
+                                    selected
+                                {% endif %}
+                            >
+                                IT
+                            </option>
+
+                            <option value="ECE"
+                                {% if request.form.get('department') == 'ECE' %}
+                                    selected
+                                {% endif %}
+                            >
+                                ECE
+                            </option>
+
+                            <option value="EEE"
+                                {% if request.form.get('department') == 'EEE' %}
+                                    selected
+                                {% endif %}
+                            >
+                                EEE
+                            </option>
+
+                            <option value="MECH"
+                                {% if request.form.get('department') == 'MECH' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Mechanical
+                            </option>
+
+                            <option value="CIVIL"
+                                {% if request.form.get('department') == 'CIVIL' %}
+                                    selected
+                                {% endif %}
+                            >
+                                Civil
+                            </option>
+
+                            <option value="AI&DS"
+                                {% if request.form.get('department') == 'AI&DS' %}
+                                    selected
+                                {% endif %}
+                            >
+                                AI & DS
+                            </option>
+
+                            <option value="AIML"
+                                {% if request.form.get('department') == 'AIML' %}
+                                    selected
+                                {% endif %}
+                            >
+                                AI & ML
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Year
+                        </label>
+
+                        <select
+                            name="year"
+                            required
+                        >
+
+                            <option value="">
+                                Select Year
+                            </option>
+
+                            <option value="1"
+                                {% if request.form.get('year') == '1' %}
+                                    selected
+                                {% endif %}
+                            >
+                                1st Year
+                            </option>
+
+                            <option value="2"
+                                {% if request.form.get('year') == '2' %}
+                                    selected
+                                {% endif %}
+                            >
+                                2nd Year
+                            </option>
+
+                            <option value="3"
+                                {% if request.form.get('year') == '3' %}
+                                    selected
+                                {% endif %}
+                            >
+                                3rd Year
+                            </option>
+
+                            <option value="4"
+                                {% if request.form.get('year') == '4' %}
+                                    selected
+                                {% endif %}
+                            >
+                                4th Year
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CGPA -->
+
+                <div class="form-group">
+
+                    <label>
+                        CGPA
+                    </label>
+
+                    <input
+                        type="number"
+                        name="cgpa"
+                        placeholder="Enter your CGPA"
+                        step="0.01"
+                        min="0"
+                        max="10"
+                        required
+                        value="{{ request.form.get('cgpa', '') }}"
+                    >
+
+                    <div class="field-help">
+
+                        Enter your current CGPA between 0 and 10.
+
+                        Example:
+                        <strong>8.50</strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Create a password"
+                        minlength="4"
+                        required
+                    >
+
+                    <div class="field-help">
+
+                        Password must contain at least 4 characters.
+
+                    </div>
+
+                </div>
+
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    class="register-button"
+                >
+
+                    🎓 &nbsp; Create Account
+
+                </button>
+
+
+            </form>
+
+
+            <!-- LOGIN -->
+
+            <div class="login-section">
+
+                Already have an account?
+
+                <a href="{{ url_for('student_login') }}">
+                    Login Here
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- 3D MOUSE EFFECT -->
+
+    <script>
+
+        const card =
+            document.getElementById("registerCard");
+
+        document.addEventListener("mousemove", function(event) {
+
+            const x =
+                event.clientX / window.innerWidth;
+
+            const y =
+                event.clientY / window.innerHeight;
+
+            const rotateY =
+                (x - 0.5) * 6;
+
+            const rotateX =
+                (0.5 - y) * 6;
+
+            card.style.transform =
+                `rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)`;
+
+        });
+
+
+        document.addEventListener("mouseleave", function() {
+
+            card.style.transform =
+                "rotateX(0deg) rotateY(0deg)";
+
+        });
+
+    </script>
 
 </body>
+
 </html>

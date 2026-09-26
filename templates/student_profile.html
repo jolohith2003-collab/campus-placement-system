@@ -10,234 +10,941 @@
 
     <title>Student Profile - Campus Placement System</title>
 
+
     <style>
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
+
+
+        /* =========================
+           BODY
+        ========================= */
 
         body {
-            margin: 0;
+
+            min-height: 100vh;
+
             font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #222;
+
+            color: #ffffff;
+
+            background:
+                radial-gradient(
+                    circle at 12% 20%,
+                    rgba(0, 153, 255, 0.18),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 88% 75%,
+                    rgba(132, 0, 255, 0.20),
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #050816,
+                    #0b1026,
+                    #050816
+                );
+
+            overflow-x: hidden;
         }
 
-        /* NAVBAR */
+
+        /* =========================
+           FLOATING GLOW
+        ========================= */
+
+        body::before,
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            width: 280px;
+            height: 280px;
+
+            border-radius: 50%;
+
+            filter: blur(80px);
+
+            opacity: 0.35;
+
+            z-index: -1;
+
+            pointer-events: none;
+
+            animation:
+                floatingOrb 8s ease-in-out infinite alternate;
+        }
+
+
+        body::before {
+
+            background: #0077ff;
+
+            top: 100px;
+            left: -100px;
+        }
+
+
+        body::after {
+
+            background: #8b00ff;
+
+            right: -100px;
+            bottom: 50px;
+
+            animation-delay: 2s;
+        }
+
+
+        @keyframes floatingOrb {
+
+            from {
+                transform:
+                    translateY(0)
+                    translateX(0)
+                    scale(1);
+            }
+
+            to {
+                transform:
+                    translateY(-40px)
+                    translateX(30px)
+                    scale(1.15);
+            }
+
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
 
         .navbar {
-            background: #2563eb;
-            color: white;
-            padding: 18px 7%;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+            width: 100%;
+
+            padding: 18px 30px;
+
+            background:
+                rgba(5, 8, 22, 0.68);
+
+            backdrop-filter: blur(18px);
+
+            -webkit-backdrop-filter: blur(18px);
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+
+            box-shadow:
+                0 10px 40px
+                rgba(0, 0, 0, 0.30);
+        }
+
+
+        .nav-container {
+
+            max-width: 1200px;
+
+            margin: auto;
+
             display: flex;
-            justify-content: space-between;
+
             align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
         }
 
-        .navbar h2 {
-            margin: 0;
+
+        .logo {
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #63c5ff,
+                    #b36cff
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
         }
 
-        .navbar a {
-            color: white;
+
+        .nav-link {
+
+            color: #ffffff;
+
             text-decoration: none;
-            background: #1d4ed8;
+
             padding: 10px 18px;
-            border-radius: 7px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.15);
+
+            border-radius: 12px;
+
+            background:
+                rgba(255, 255, 255, 0.06);
+
+            transition: 0.3s ease;
         }
 
-        /* CONTAINER */
+
+        .nav-link:hover {
+
+            transform: translateY(-2px);
+
+            background:
+                rgba(255, 255, 255, 0.12);
+
+            border-color:
+                rgba(100, 190, 255, 0.5);
+
+            box-shadow:
+                0 8px 25px
+                rgba(0, 153, 255, 0.20);
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
 
         .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: 40px auto;
+
+            width: min(1150px, 92%);
+
+            margin: auto;
+
+            padding: 65px 0;
         }
 
-        h1 {
-            color: #1d4ed8;
-            margin-bottom: 5px;
+
+        .page-heading {
+
+            margin-bottom: 40px;
         }
+
+
+        .page-heading h1 {
+
+            font-size:
+                clamp(38px, 6vw, 60px);
+
+            line-height: 1.05;
+
+            margin-bottom: 14px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #61c5ff,
+                    #a66cff,
+                    #ffffff
+                );
+
+            background-size: 200% auto;
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            animation:
+                gradientMove 5s linear infinite;
+        }
+
+
+        @keyframes gradientMove {
+
+            to {
+                background-position: 200% center;
+            }
+
+        }
+
 
         .subtitle {
-            color: #666;
-            margin-bottom: 30px;
+
+            color: #aebbd0;
+
+            font-size: 17px;
+
+            line-height: 1.6;
         }
 
-        /* PROFILE CARD */
+
+        /* =========================
+           PROFILE CARD
+        ========================= */
 
         .profile-card {
-            background: white;
-            padding: 30px;
-            border-radius: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            position: relative;
+
+            padding: 32px;
+
             margin-bottom: 30px;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.12),
+                    rgba(255, 255, 255, 0.035)
+                );
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.14);
+
+            backdrop-filter: blur(18px);
+
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0, 0, 0, 0.35),
+
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.08);
+
+            overflow: hidden;
+
+            transform-style: preserve-3d;
+
+            transition: 0.4s ease;
         }
+
+
+        .profile-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 200px;
+            height: 200px;
+
+            top: -100px;
+            right: -70px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0, 174, 255, 0.20);
+
+            filter: blur(35px);
+
+            pointer-events: none;
+        }
+
+
+        .profile-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 2px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    #42c8ff,
+                    #9b5cff,
+                    transparent
+                );
+        }
+
+
+        .profile-card:hover {
+
+            transform:
+                translateY(-5px);
+
+            border-color:
+                rgba(74, 196, 255, 0.35);
+
+            box-shadow:
+                0 30px 70px
+                rgba(0, 0, 0, 0.45);
+        }
+
+
+        /* =========================
+           PROFILE HEADER
+        ========================= */
 
         .profile-header {
+
+            position: relative;
+
+            z-index: 2;
+
             display: flex;
+
             align-items: center;
-            gap: 20px;
-            margin-bottom: 25px;
+
+            gap: 22px;
+
+            margin-bottom: 30px;
+
+            transform:
+                translateZ(20px);
         }
+
 
         .profile-icon {
-            width: 70px;
-            height: 70px;
-            background: #dbeafe;
-            color: #1d4ed8;
-            border-radius: 50%;
+
+            width: 82px;
+            height: 82px;
+
+            flex-shrink: 0;
+
             display: flex;
+
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+
+            border-radius: 50%;
+
+            font-size: 38px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 119, 255, 0.25),
+                    rgba(106, 53, 255, 0.30)
+                );
+
+            border:
+                1px solid
+                rgba(100, 190, 255, 0.30);
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 100, 255, 0.20);
         }
+
 
         .profile-header h2 {
-            margin: 0;
+
+            margin-bottom: 7px;
+
+            font-size: 30px;
+
+            color: #ffffff;
         }
+
 
         .profile-header p {
-            margin: 5px 0;
-            color: #666;
+
+            color: #7fcfff;
+
+            font-size: 15px;
         }
 
-        /* DETAILS */
+
+        /* =========================
+           DETAILS GRID
+        ========================= */
 
         .details-grid {
+
+            position: relative;
+
+            z-index: 2;
+
             display: grid;
-            grid-template-columns: 1fr 1fr;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
             gap: 18px;
         }
 
+
         .detail-box {
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 8px;
+
+            padding: 20px;
+
+            border-radius: 16px;
+
+            background:
+                rgba(255, 255, 255, 0.045);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            transition: 0.3s ease;
+
+            transform:
+                translateZ(10px);
         }
+
+
+        .detail-box:hover {
+
+            background:
+                rgba(255, 255, 255, 0.075);
+
+            transform:
+                translateZ(15px)
+                translateY(-3px);
+
+            border-color:
+                rgba(100, 190, 255, 0.25);
+        }
+
 
         .detail-box strong {
+
             display: block;
-            color: #555;
-            margin-bottom: 5px;
+
+            margin-bottom: 8px;
+
+            color: #aebbd0;
+
+            font-size: 13px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.6px;
         }
+
 
         .detail-box span {
-            font-size: 16px;
-            font-weight: bold;
+
+            color: #ffffff;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            word-break: break-word;
         }
 
-        /* APPLICATIONS */
+
+        /* =========================
+           APPLICATIONS CARD
+        ========================= */
 
         .applications-card {
-            background: white;
+
+            position: relative;
+
             padding: 30px;
-            border-radius: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.12),
+                    rgba(255, 255, 255, 0.035)
+                );
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.14);
+
+            backdrop-filter: blur(18px);
+
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0, 0, 0, 0.35);
+
+            overflow: hidden;
         }
+
+
+        .applications-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            left: -100px;
+            bottom: -100px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(132, 0, 255, 0.20);
+
+            filter: blur(40px);
+
+            pointer-events: none;
+        }
+
 
         .applications-card h2 {
-            margin-top: 0;
-            color: #1d4ed8;
+
+            position: relative;
+
+            z-index: 2;
+
+            margin-bottom: 25px;
+
+            font-size: 25px;
+
+            color: #ffffff;
         }
+
+
+        /* =========================
+           TABLE
+        ========================= */
 
         .table-container {
+
+            position: relative;
+
+            z-index: 2;
+
             overflow-x: auto;
+
+            border-radius: 16px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
         }
 
+
         table {
+
             width: 100%;
+
+            min-width: 700px;
+
             border-collapse: collapse;
         }
 
+
         th {
-            background: #2563eb;
-            color: white;
-            padding: 13px;
+
+            padding: 16px;
+
             text-align: left;
+
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 119, 255, 0.55),
+                    rgba(106, 53, 255, 0.55)
+                );
+
+            font-size: 14px;
+
+            white-space: nowrap;
         }
+
 
         td {
-            padding: 13px;
-            border-bottom: 1px solid #ddd;
+
+            padding: 16px;
+
+            color: #c1cde0;
+
+            border-bottom:
+                1px solid
+                rgba(255, 255, 255, 0.07);
+
+            background:
+                rgba(255, 255, 255, 0.025);
         }
 
-        tr:hover {
-            background: #f8fafc;
+
+        tbody tr {
+
+            transition: 0.3s ease;
         }
 
-        /* STATUS */
+
+        tbody tr:hover td {
+
+            background:
+                rgba(255, 255, 255, 0.07);
+
+            color: #ffffff;
+        }
+
+
+        tbody tr:last-child td {
+
+            border-bottom: none;
+        }
+
+
+        /* =========================
+           STATUS BADGES
+        ========================= */
 
         .status {
+
             display: inline-block;
-            padding: 6px 12px;
+
+            padding: 7px 13px;
+
             border-radius: 20px;
-            font-weight: bold;
+
+            font-weight: 700;
+
+            font-size: 13px;
+
+            white-space: nowrap;
         }
+
 
         .status-applied {
-            background: #dbeafe;
-            color: #1d4ed8;
+
+            background:
+                rgba(0, 119, 255, 0.20);
+
+            color: #70c9ff;
+
+            border:
+                1px solid
+                rgba(70, 170, 255, 0.30);
         }
+
 
         .status-shortlisted {
-            background: #fef3c7;
-            color: #92400e;
+
+            background:
+                rgba(255, 193, 7, 0.15);
+
+            color: #ffd76a;
+
+            border:
+                1px solid
+                rgba(255, 193, 7, 0.30);
         }
+
 
         .status-selected {
-            background: #dcfce7;
-            color: #166534;
+
+            background:
+                rgba(34, 197, 94, 0.15);
+
+            color: #70e59a;
+
+            border:
+                1px solid
+                rgba(34, 197, 94, 0.30);
         }
+
 
         .status-rejected {
-            background: #fee2e2;
-            color: #991b1b;
+
+            background:
+                rgba(239, 68, 68, 0.15);
+
+            color: #ff8585;
+
+            border:
+                1px solid
+                rgba(239, 68, 68, 0.30);
         }
+
+
+        /* =========================
+           NO APPLICATIONS
+        ========================= */
 
         .no-applications {
+
+            position: relative;
+
+            z-index: 2;
+
+            padding: 40px;
+
             text-align: center;
-            padding: 30px;
-            color: #666;
-            background: #f8fafc;
-            border-radius: 8px;
+
+            border-radius: 18px;
+
+            background:
+                rgba(255, 255, 255, 0.045);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
         }
 
-        /* BUTTON */
+
+        .no-applications h3 {
+
+            margin-bottom: 10px;
+
+            font-size: 23px;
+
+            color: #ffffff;
+        }
+
+
+        .no-applications p {
+
+            color: #aebbd0;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
 
         .back-btn {
+
             display: inline-block;
-            margin-top: 25px;
-            background: #6b7280;
-            color: white;
+
+            margin-top: 30px;
+
+            padding: 13px 22px;
+
+            color: #ffffff;
+
             text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 7px;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0077ff,
+                    #6a35ff
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(0, 100, 255, 0.25);
+
+            transition: 0.3s ease;
         }
+
 
         .back-btn:hover {
-            background: #4b5563;
+
+            transform:
+                translateY(-3px)
+                scale(1.02);
+
+            box-shadow:
+                0 15px 35px
+                rgba(0, 120, 255, 0.40);
         }
 
-        /* MOBILE */
+
+        /* =========================
+           MOBILE
+        ========================= */
 
         @media (max-width: 700px) {
 
-            .details-grid {
-                grid-template-columns: 1fr;
+            .navbar {
+
+                padding:
+                    15px 18px;
             }
 
+
+            .logo {
+
+                font-size: 16px;
+            }
+
+
+            .nav-link {
+
+                padding:
+                    8px 12px;
+
+                font-size: 14px;
+            }
+
+
+            .container {
+
+                width: 94%;
+
+                padding:
+                    45px 0;
+            }
+
+
+            .profile-card,
+            .applications-card {
+
+                padding: 22px;
+            }
+
+
             .profile-header {
+
                 flex-direction: column;
+
                 align-items: flex-start;
             }
 
-            .navbar {
-                padding: 18px 5%;
+
+            .details-grid {
+
+                grid-template-columns: 1fr;
             }
 
-            .container {
-                width: 94%;
+
+            .profile-header h2 {
+
+                font-size: 26px;
+            }
+
+
+            .page-heading h1 {
+
+                font-size: 42px;
             }
 
         }
@@ -250,281 +957,390 @@
 <body>
 
 
-<!-- NAVBAR -->
+    <!-- NAVBAR -->
 
-<div class="navbar">
+    <nav class="navbar">
 
-    <h2>
-        Campus Placement System - Admin
-    </h2>
+        <div class="nav-container">
 
-    <a href="{{ url_for('student_management') }}">
-        Student Management
-    </a>
-
-</div>
-
-
-<!-- MAIN -->
-
-<div class="container">
-
-
-    <h1>
-        Student Profile
-    </h1>
-
-    <p class="subtitle">
-        View student information and placement applications.
-    </p>
-
-
-    <!-- STUDENT INFORMATION -->
-
-    <div class="profile-card">
-
-        <div class="profile-header">
-
-            <div class="profile-icon">
-                👨‍🎓
+            <div class="logo">
+                Campus Placement System - Admin
             </div>
 
-            <div>
-
-                <h2>
-                    {{ student.name }}
-                </h2>
-
-                <p>
-                    {{ student.register_no }}
-                </p>
-
-            </div>
+            <a
+                href="{{ url_for('student_management') }}"
+                class="nav-link"
+            >
+                Student Management
+            </a>
 
         </div>
 
+    </nav>
 
-        <div class="details-grid">
 
+    <!-- MAIN -->
 
-            <div class="detail-box">
+    <main class="container">
 
-                <strong>
-                    Student ID
-                </strong>
 
-                <span>
-                    {{ student.id }}
-                </span>
+        <div class="page-heading">
 
-            </div>
+            <h1>
+                Student Profile
+            </h1>
 
-
-            <div class="detail-box">
-
-                <strong>
-                    Register Number
-                </strong>
-
-                <span>
-                    {{ student.register_no }}
-                </span>
-
-            </div>
-
-
-            <div class="detail-box">
-
-                <strong>
-                    Email
-                </strong>
-
-                <span>
-                    {{ student.email }}
-                </span>
-
-            </div>
-
-
-            <div class="detail-box">
-
-                <strong>
-                    Phone
-                </strong>
-
-                <span>
-                    {{ student.phone }}
-                </span>
-
-            </div>
-
-
-            <div class="detail-box">
-
-                <strong>
-                    Department
-                </strong>
-
-                <span>
-                    {{ student.department }}
-                </span>
-
-            </div>
-
-
-            <div class="detail-box">
-
-                <strong>
-                    Year
-                </strong>
-
-                <span>
-                    {{ student.year }}
-                </span>
-
-            </div>
-
-
-        </div>
-
-    </div>
-
-
-    <!-- APPLICATIONS -->
-
-    <div class="applications-card">
-
-        <h2>
-            📋 Placement Applications
-        </h2>
-
-
-        {% if applications %}
-
-        <div class="table-container">
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>
-                            Company
-                        </th>
-
-                        <th>
-                            Job Role
-                        </th>
-
-                        <th>
-                            Salary
-                        </th>
-
-                        <th>
-                            Status
-                        </th>
-
-                        <th>
-                            Applied On
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody>
-
-                    {% for application in applications %}
-
-                    <tr>
-
-                        <td>
-                            {{ application.company_name }}
-                        </td>
-
-                        <td>
-                            {{ application.job_role }}
-                        </td>
-
-                        <td>
-                            {{ application.salary }}
-                        </td>
-
-                        <td>
-
-                            {% if application.status == "Selected" %}
-
-                                <span class="status status-selected">
-                                    Selected
-                                </span>
-
-                            {% elif application.status == "Shortlisted" %}
-
-                                <span class="status status-shortlisted">
-                                    Shortlisted
-                                </span>
-
-                            {% elif application.status == "Rejected" %}
-
-                                <span class="status status-rejected">
-                                    Rejected
-                                </span>
-
-                            {% else %}
-
-                                <span class="status status-applied">
-                                    {{ application.status }}
-                                </span>
-
-                            {% endif %}
-
-                        </td>
-
-                        <td>
-                            {{ application.applied_at }}
-                        </td>
-
-                    </tr>
-
-                    {% endfor %}
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-        {% else %}
-
-        <div class="no-applications">
-
-            <h3>
-                No Applications
-            </h3>
-
-            <p>
-                This student has not applied for any placement companies yet.
+            <p class="subtitle">
+                View student information and placement applications.
             </p>
 
         </div>
 
-        {% endif %}
+
+        <!-- STUDENT INFORMATION -->
+
+        <section class="profile-card">
 
 
-    </div>
+            <div class="profile-header">
+
+                <div class="profile-icon">
+                    👨‍🎓
+                </div>
 
 
-    <a
-        href="{{ url_for('student_management') }}"
-        class="back-btn"
-    >
-        ← Back to Student Management
-    </a>
+                <div>
+
+                    <h2>
+                        {{ student.name }}
+                    </h2>
+
+                    <p>
+                        {{ student.register_no }}
+                    </p>
+
+                </div>
+
+            </div>
 
 
-</div>
+            <div class="details-grid">
+
+
+                <div class="detail-box">
+
+                    <strong>
+                        Student ID
+                    </strong>
+
+                    <span>
+                        {{ student.id }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>
+                        Register Number
+                    </strong>
+
+                    <span>
+                        {{ student.register_no }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>
+                        Email
+                    </strong>
+
+                    <span>
+                        {{ student.email }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>
+                        Phone
+                    </strong>
+
+                    <span>
+                        {{ student.phone }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>
+                        Department
+                    </strong>
+
+                    <span>
+                        {{ student.department }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>
+                        Year
+                    </strong>
+
+                    <span>
+                        {{ student.year }}
+                    </span>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- APPLICATIONS -->
+
+        <section class="applications-card">
+
+
+            <h2>
+                📋 Placement Applications
+            </h2>
+
+
+            {% if applications %}
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Company
+                            </th>
+
+                            <th>
+                                Job Role
+                            </th>
+
+                            <th>
+                                Salary
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Applied On
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for application in applications %}
+
+
+                        <tr>
+
+                            <td>
+                                {{ application.company_name }}
+                            </td>
+
+                            <td>
+                                {{ application.job_role }}
+                            </td>
+
+                            <td>
+                                {{ application.salary }}
+                            </td>
+
+
+                            <td>
+
+
+                                {% if application.status == "Selected" %}
+
+                                    <span
+                                        class="status status-selected"
+                                    >
+                                        Selected
+                                    </span>
+
+
+                                {% elif application.status == "Shortlisted" %}
+
+                                    <span
+                                        class="status status-shortlisted"
+                                    >
+                                        Shortlisted
+                                    </span>
+
+
+                                {% elif application.status == "Rejected" %}
+
+                                    <span
+                                        class="status status-rejected"
+                                    >
+                                        Rejected
+                                    </span>
+
+
+                                {% else %}
+
+                                    <span
+                                        class="status status-applied"
+                                    >
+                                        {{ application.status }}
+                                    </span>
+
+                                {% endif %}
+
+
+                            </td>
+
+
+                            <td>
+                                {{ application.applied_at }}
+                            </td>
+
+                        </tr>
+
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+
+            <!-- NO APPLICATIONS -->
+
+            <div class="no-applications">
+
+                <h3>
+                    No Applications
+                </h3>
+
+                <p>
+                    This student has not applied for any
+                    placement companies yet.
+                </p>
+
+            </div>
+
+
+            {% endif %}
+
+
+        </section>
+
+
+        <!-- BACK BUTTON -->
+
+        <a
+            href="{{ url_for('student_management') }}"
+            class="back-btn"
+        >
+            ← Back to Student Management
+        </a>
+
+
+    </main>
+
+
+    <!-- 3D MOUSE EFFECT -->
+
+    <script>
+
+        const profileCard =
+            document.querySelector(".profile-card");
+
+
+        if (profileCard) {
+
+            profileCard.addEventListener(
+                "mousemove",
+                (event) => {
+
+                    const rect =
+                        profileCard.getBoundingClientRect();
+
+
+                    const x =
+                        event.clientX - rect.left;
+
+
+                    const y =
+                        event.clientY - rect.top;
+
+
+                    const centerX =
+                        rect.width / 2;
+
+
+                    const centerY =
+                        rect.height / 2;
+
+
+                    const rotateX =
+                        ((y - centerY) / centerY) * -2.5;
+
+
+                    const rotateY =
+                        ((x - centerX) / centerX) * 2.5;
+
+
+                    profileCard.style.transform =
+                        `translateY(-5px)
+                         rotateX(${rotateX}deg)
+                         rotateY(${rotateY}deg)`;
+
+                }
+            );
+
+
+            profileCard.addEventListener(
+                "mouseleave",
+                () => {
+
+                    profileCard.style.transform =
+                        "translateY(0) rotateX(0) rotateY(0)";
+
+                }
+            );
+
+        }
+
+    </script>
+
 
 </body>
 

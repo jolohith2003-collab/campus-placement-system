@@ -8,144 +8,604 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Edit Company - Campus Placement System</title>
+    <title>Edit Company - Campus Placement</title>
 
     <style>
 
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #222;
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(0,119,255,0.22),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(124,58,237,0.22),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #020617,
+                    #071329,
+                    #030712
+                );
+
+            overflow-x: hidden;
         }
+
+
+        /* BACKGROUND */
+
+        .glow {
+
+            position: fixed;
+
+            width: 320px;
+            height: 320px;
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            opacity: .30;
+
+            pointer-events: none;
+        }
+
+
+        .glow-one {
+
+            background: #0066ff;
+
+            top: 60px;
+            left: -130px;
+        }
+
+
+        .glow-two {
+
+            background: #7c3aed;
+
+            right: -130px;
+            top: 400px;
+        }
+
+
+        .glow-three {
+
+            background: #06b6d4;
+
+            bottom: -150px;
+            left: 40%;
+        }
+
+
+        /* NAVBAR */
 
         .navbar {
-            background: #2563eb;
-            color: white;
-            padding: 18px 6%;
+
+            position: relative;
+
+            z-index: 5;
+
+            width: 92%;
+
+            margin: 20px auto;
+
+            padding: 18px 25px;
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
+            border-radius: 20px;
+
+            background:
+                rgba(15,23,42,.65);
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
+
+            backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,.35);
         }
 
-        .navbar h2 {
-            margin: 0;
+
+        .logo {
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #60a5fa,
+                    #a78bfa,
+                    #22d3ee
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
         }
 
-        .navbar a {
+
+        .nav-links {
+
+            display: flex;
+
+            gap: 10px;
+        }
+
+
+        .nav-links a {
+
             color: white;
+
             text-decoration: none;
-            background: #1d4ed8;
+
             padding: 10px 18px;
-            border-radius: 7px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,.08);
+
+            border:
+                1px solid
+                rgba(255,255,255,.10);
+
+            transition: .3s;
         }
+
+
+        .nav-links a:hover {
+
+            transform:
+                translateY(-3px);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 10px 25px
+                rgba(37,99,235,.35);
+        }
+
+
+        /* MAIN */
 
         .container {
-            width: 90%;
-            max-width: 800px;
-            margin: 40px auto;
+
+            position: relative;
+
+            z-index: 2;
+
+            width: 92%;
+
+            max-width: 950px;
+
+            margin: 55px auto 80px;
         }
 
-        .card {
-            background: white;
-            padding: 35px;
-            border-radius: 14px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
 
-        h1 {
-            margin-top: 0;
-            color: #1d4ed8;
-        }
+        .heading {
 
-        .subtitle {
-            color: #666;
             margin-bottom: 30px;
         }
 
-        .form-group {
-            margin-bottom: 20px;
+
+        .heading h1 {
+
+            font-size: 50px;
+
+            margin-bottom: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #60a5fa,
+                    #c084fc
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
         }
 
-        label {
-            display: block;
-            margin-bottom: 7px;
-            font-weight: bold;
+
+        .heading p {
+
+            color: #94a3b8;
+
+            font-size: 17px;
         }
+
+
+        /* FLASH */
+
+        .flash {
+
+            padding: 15px 20px;
+
+            margin-bottom: 20px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,.07);
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
+        }
+
+
+        .flash.success {
+
+            color: #86efac;
+        }
+
+
+        .flash.error {
+
+            color: #fca5a5;
+        }
+
+
+        /* FORM CARD */
+
+        .form-card {
+
+            padding: 35px;
+
+            border-radius: 26px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,.10),
+                    rgba(255,255,255,.04)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,.13);
+
+            backdrop-filter: blur(22px);
+
+            box-shadow:
+                0 30px 80px
+                rgba(0,0,0,.40);
+
+            transition: .3s ease;
+        }
+
+
+        /* HEADER */
+
+        .form-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+            margin-bottom: 30px;
+
+            padding-bottom: 25px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.10);
+        }
+
+
+        .company-icon {
+
+            width: 70px;
+            height: 70px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 20px;
+
+            font-size: 36px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(37,99,235,.30),
+                    rgba(124,58,237,.30)
+                );
+
+            border:
+                1px solid
+                rgba(96,165,250,.25);
+
+            box-shadow:
+                0 15px 35px
+                rgba(37,99,235,.20);
+        }
+
+
+        .form-header h2 {
+
+            font-size: 25px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .form-header p {
+
+            color: #60a5fa;
+        }
+
+
+        /* FORM */
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2,1fr);
+
+            gap: 22px;
+        }
+
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 9px;
+        }
+
+
+        .full {
+
+            grid-column:
+                1 / -1;
+        }
+
+
+        label {
+
+            color: #cbd5e1;
+
+            font-size: 14px;
+
+            font-weight: 600;
+        }
+
 
         input,
         textarea {
+
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
+
+            padding: 15px 16px;
+
+            border-radius: 13px;
+
+            outline: none;
+
+            color: white;
+
             font-size: 15px;
+
+            background:
+                rgba(2,6,23,.65);
+
+            border:
+                1px solid
+                rgba(255,255,255,.13);
+
+            transition: .3s;
         }
 
-        textarea {
-            min-height: 120px;
-            resize: vertical;
+
+        input::placeholder,
+        textarea::placeholder {
+
+            color: #64748b;
         }
+
 
         input:focus,
         textarea:focus {
-            outline: none;
-            border-color: #2563eb;
+
+            border-color: #60a5fa;
+
+            box-shadow:
+                0 0 25px
+                rgba(59,130,246,.20);
+
+            transform:
+                translateY(-2px);
         }
+
+
+        textarea {
+
+            min-height: 140px;
+
+            resize: vertical;
+
+            line-height: 1.6;
+        }
+
+
+        /* BUTTONS */
 
         .buttons {
+
             display: flex;
-            gap: 12px;
-            margin-top: 25px;
+
+            gap: 15px;
+
+            margin-top: 30px;
+
+            padding-top: 25px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.10);
         }
+
+
+        .update-btn,
+        .cancel-btn {
+
+            padding: 14px 24px;
+
+            border-radius: 13px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            transition: .3s;
+        }
+
 
         .update-btn {
-            background: #2563eb;
-            color: white;
+
             border: none;
-            padding: 12px 25px;
-            border-radius: 7px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 12px 30px
+                rgba(37,99,235,.25);
         }
 
-        .update-btn:hover {
-            background: #1d4ed8;
-        }
 
         .cancel-btn {
-            background: #6b7280;
+
             color: white;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 7px;
-            font-weight: bold;
+
+            background:
+                rgba(255,255,255,.08);
+
+            border:
+                1px solid
+                rgba(255,255,255,.12);
         }
 
+
+        .update-btn:hover,
         .cancel-btn:hover {
-            background: #4b5563;
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 18px 35px
+                rgba(37,99,235,.30);
         }
 
-        .flash {
-            padding: 14px;
-            margin-bottom: 20px;
-            border-radius: 7px;
-            font-weight: bold;
-        }
 
-        .success {
-            background: #dcfce7;
-            color: #166534;
-        }
+        /* MOBILE */
 
-        .error {
-            background: #fee2e2;
-            color: #991b1b;
+        @media(max-width:700px) {
+
+            .navbar {
+
+                flex-direction: column;
+
+                gap: 15px;
+
+                align-items: flex-start;
+            }
+
+            .nav-links {
+
+                flex-wrap: wrap;
+            }
+
+            .heading h1 {
+
+                font-size: 38px;
+            }
+
+            .form-card {
+
+                padding: 22px;
+            }
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+
+                grid-column: auto;
+            }
+
+            .buttons {
+
+                flex-direction: column;
+            }
+
+            .update-btn,
+            .cancel-btn {
+
+                width: 100%;
+
+                text-align: center;
+            }
+
         }
 
     </style>
@@ -156,31 +616,53 @@
 <body>
 
 
-<!-- =========================
-     NAVBAR
-========================= -->
+<div class="glow glow-one"></div>
+<div class="glow glow-two"></div>
+<div class="glow glow-three"></div>
 
-<div class="navbar">
 
-    <h2>
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
         Campus Placement System - Admin
-    </h2>
+    </div>
 
-    <a href="{{ url_for('admin_dashboard') }}">
-        Dashboard
-    </a>
+    <div class="nav-links">
 
-</div>
+        <a href="{{ url_for('admin_dashboard') }}">
+            🏠 Dashboard
+        </a>
+
+        <a href="{{ url_for('company_management') }}">
+            🏢 Companies
+        </a>
+
+    </div>
+
+</nav>
 
 
-<!-- =========================
-     MAIN
-========================= -->
+<!-- MAIN -->
 
-<div class="container">
+<main class="container">
 
 
-    <!-- FLASH MESSAGES -->
+    <div class="heading">
+
+        <h1>
+            ✏️ Edit Company
+        </h1>
+
+        <p>
+            Update the company's placement information.
+        </p>
+
+    </div>
+
+
+    <!-- FLASH -->
 
     {% with messages = get_flashed_messages(with_categories=true) %}
 
@@ -199,171 +681,179 @@
     {% endwith %}
 
 
-    <div class="card">
+    <!-- FORM -->
 
-        <h1>
-            ✏️ Edit Company
-        </h1>
-
-        <p class="subtitle">
-            Update the company and placement information.
-        </p>
+    <section class="form-card">
 
 
-        <!-- =========================
-             EDIT FORM
-        ========================== -->
+        <div class="form-header">
 
-        <form method="POST">
+            <div class="company-icon">
+                🏢
+            </div>
 
+            <div>
 
-            <!-- COMPANY NAME -->
+                <h2>
+                    {{ company.company_name }}
+                </h2>
 
-            <div class="form-group">
-
-                <label for="company_name">
-                    Company Name
-                </label>
-
-                <input
-                    type="text"
-                    id="company_name"
-                    name="company_name"
-                    value="{{ company.company_name }}"
-                    required
-                >
+                <p>
+                    {{ company.job_role }}
+                </p>
 
             </div>
 
-
-            <!-- JOB ROLE -->
-
-            <div class="form-group">
-
-                <label for="job_role">
-                    Job Role
-                </label>
-
-                <input
-                    type="text"
-                    id="job_role"
-                    name="job_role"
-                    value="{{ company.job_role }}"
-                    required
-                >
-
-            </div>
+        </div>
 
 
-            <!-- SALARY -->
-
-            <div class="form-group">
-
-                <label for="salary">
-                    Salary / Package
-                </label>
-
-                <input
-                    type="text"
-                    id="salary"
-                    name="salary"
-                    value="{{ company.salary }}"
-                    required
-                >
-
-            </div>
+        <form
+            method="POST"
+            action="{{ url_for('edit_company', company_id=company.id) }}"
+        >
 
 
-            <!-- MIN CGPA -->
-
-            <div class="form-group">
-
-                <label for="min_cgpa">
-                    Minimum CGPA
-                </label>
-
-                <input
-                    type="number"
-                    id="min_cgpa"
-                    name="min_cgpa"
-                    value="{{ company.min_cgpa or '' }}"
-                    step="0.01"
-                    min="0"
-                    max="10"
-                >
-
-            </div>
+            <div class="form-grid">
 
 
-            <!-- DEPARTMENT -->
+                <!-- COMPANY -->
 
-            <div class="form-group">
+                <div class="form-group">
 
-                <label for="eligible_department">
-                    Eligible Department
-                </label>
+                    <label>
+                        Company Name *
+                    </label>
 
-                <input
-                    type="text"
-                    id="eligible_department"
-                    name="eligible_department"
-                    value="{{ company.eligible_department or '' }}"
-                    placeholder="Example: BCA, MCA, CSE"
-                >
+                    <input
+                        type="text"
+                        name="company_name"
+                        value="{{ company.company_name }}"
+                        required
+                    >
 
-            </div>
-
-
-            <!-- YEAR -->
-
-            <div class="form-group">
-
-                <label for="eligible_year">
-                    Eligible Year
-                </label>
-
-                <input
-                    type="text"
-                    id="eligible_year"
-                    name="eligible_year"
-                    value="{{ company.eligible_year or '' }}"
-                    placeholder="Example: 3rd Year"
-                >
-
-            </div>
+                </div>
 
 
-            <!-- DEADLINE -->
+                <!-- JOB ROLE -->
 
-            <div class="form-group">
+                <div class="form-group">
 
-                <label for="deadline">
-                    Application Deadline
-                </label>
+                    <label>
+                        Job Role *
+                    </label>
 
-                <input
-                    type="date"
-                    id="deadline"
-                    name="deadline"
-                    value="{{ company.deadline or '' }}"
-                >
+                    <input
+                        type="text"
+                        name="job_role"
+                        value="{{ company.job_role }}"
+                        required
+                    >
 
-            </div>
+                </div>
 
 
-            <!-- DESCRIPTION -->
+                <!-- SALARY -->
 
-            <div class="form-group">
+                <div class="form-group">
 
-                <label for="description">
-                    Description
-                </label>
+                    <label>
+                        Salary
+                    </label>
 
-                <textarea
-                    id="description"
-                    name="description"
-                    placeholder="Enter company description..."
-                >{{ company.description or '' }}</textarea>
+                    <input
+                        type="text"
+                        name="salary"
+                        value="{{ company.salary or '' }}"
+                    >
+
+                </div>
+
+
+                <!-- CGPA -->
+
+                <div class="form-group">
+
+                    <label>
+                        Minimum CGPA
+                    </label>
+
+                    <input
+                        type="number"
+                        name="min_cgpa"
+                        min="0"
+                        max="10"
+                        step="0.01"
+                        value="{{ company.min_cgpa or '' }}"
+                    >
+
+                </div>
+
+
+                <!-- DEPARTMENT -->
+
+                <div class="form-group">
+
+                    <label>
+                        Eligible Department
+                    </label>
+
+                    <input
+                        type="text"
+                        name="eligible_department"
+                        value="{{ company.eligible_department or '' }}"
+                    >
+
+                </div>
+
+
+                <!-- YEAR -->
+
+                <div class="form-group">
+
+                    <label>
+                        Eligible Year
+                    </label>
+
+                    <input
+                        type="text"
+                        name="eligible_year"
+                        value="{{ company.eligible_year or '' }}"
+                    >
+
+                </div>
+
+
+                <!-- DEADLINE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Application Deadline
+                    </label>
+
+                    <input
+                        type="date"
+                        name="deadline"
+                        value="{{ company.deadline or '' }}"
+                    >
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group full">
+
+                    <label>
+                        Job Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                    >{{ company.description or '' }}</textarea>
+
+                </div>
+
 
             </div>
 
@@ -374,19 +864,17 @@
 
                 <button
                     type="submit"
-                    class="update-btn">
-
-                    Update Company
-
+                    class="update-btn"
+                >
+                    💾 Update Company
                 </button>
 
 
                 <a
                     href="{{ url_for('company_management') }}"
-                    class="cancel-btn">
-
-                    Cancel
-
+                    class="cancel-btn"
+                >
+                    ← Cancel
                 </a>
 
             </div>
@@ -394,9 +882,68 @@
 
         </form>
 
-    </div>
 
-</div>
+    </section>
+
+
+</main>
+
+
+<!-- 3D MOUSE EFFECT -->
+
+<script>
+
+    const card =
+        document.querySelector(".form-card");
+
+
+    card.addEventListener(
+        "mousemove",
+        function(event) {
+
+            const rect =
+                card.getBoundingClientRect();
+
+            const x =
+                event.clientX - rect.left;
+
+            const y =
+                event.clientY - rect.top;
+
+            const centerX =
+                rect.width / 2;
+
+            const centerY =
+                rect.height / 2;
+
+            const rotateX =
+                ((y - centerY) / centerY) * -1.3;
+
+            const rotateY =
+                ((x - centerX) / centerX) * 1.3;
+
+            card.style.transform =
+                `perspective(1200px)
+                 rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)`;
+
+        }
+    );
+
+
+    card.addEventListener(
+        "mouseleave",
+        function() {
+
+            card.style.transform =
+                "perspective(1200px)
+                 rotateX(0deg)
+                 rotateY(0deg)";
+
+        }
+    );
+
+</script>
 
 
 </body>
