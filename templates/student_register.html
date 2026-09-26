@@ -1,634 +1,477 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Student Registration - Campus Placement System</title>
 
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
     <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            min-height: 100vh;
             background: linear-gradient(
                 135deg,
-                #eff6ff,
-                #dbeafe
+                #eef5ff,
+                #dceaff
             );
-
-            min-height: 100vh;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            padding: 30px 15px;
+            font-family: Arial, sans-serif;
         }
 
-        .container {
+        .register-container {
             width: 100%;
-            max-width: 680px;
-        }
-
-        .card {
+            max-width: 750px;
+            margin: 50px auto;
             background: white;
-            padding: 35px;
-            border-radius: 16px;
-
-            box-shadow:
-                0 8px 30px rgba(0, 0, 0, 0.10);
+            padding: 35px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
-        .header {
+        .register-title {
             text-align: center;
-            margin-bottom: 28px;
+            color: #2563eb;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
-        .icon {
-            font-size: 50px;
-            margin-bottom: 10px;
+        .register-subtitle {
+            text-align: center;
+            color: #64748b;
+            font-size: 17px;
+            margin-bottom: 35px;
         }
 
-        h1 {
-            margin: 0;
-            color: #1d4ed8;
-            font-size: 30px;
+        .form-label {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
         }
 
-        .subtitle {
-            margin-top: 8px;
-            color: #6b7280;
-            font-size: 15px;
-        }
-
-        /* =========================
-           FLASH MESSAGES
-        ========================== */
-
-        .flash {
-            padding: 14px 16px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .flash.success {
-            background: #dcfce7;
-            color: #166534;
-            border: 1px solid #86efac;
-        }
-
-        .flash.error {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fca5a5;
-        }
-
-        /* =========================
-           FORM
-        ========================== */
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 7px;
-            color: #374151;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        input,
-        select {
-            width: 100%;
-            padding: 12px 13px;
-
+        .form-control,
+        .form-select {
+            height: 48px;
             border: 1px solid #d1d5db;
             border-radius: 8px;
-
-            font-size: 15px;
-            background: white;
-
-            transition: 0.2s;
+            padding: 10px 14px;
+            font-size: 16px;
         }
 
-        input:focus,
-        select:focus {
-            outline: none;
-
+        .form-control:focus,
+        .form-select:focus {
             border-color: #2563eb;
-
-            box-shadow:
-                0 0 0 3px
-                rgba(37, 99, 235, 0.12);
-        }
-
-        .row {
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
-
-            gap: 15px;
-        }
-
-        /* =========================
-           AUTOMATIC REGISTER NUMBER
-        ========================== */
-
-        .auto-register {
-            background: #f3f4f6;
-
-            border: 1px solid #d1d5db;
-
-            color: #6b7280;
-
-            cursor: not-allowed;
-
-            font-weight: bold;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
         }
 
         .register-info {
-            margin-top: 6px;
-
-            font-size: 12px;
-
-            color: #6b7280;
-        }
-
-        /* =========================
-           PASSWORD
-        ========================== */
-
-        .password-note {
-            margin-top: 6px;
-
-            font-size: 12px;
-
-            color: #6b7280;
-        }
-
-        /* =========================
-           BUTTON
-        ========================== */
-
-        .register-btn {
-            width: 100%;
-
-            padding: 14px;
-
-            margin-top: 8px;
-
-            border: none;
-
+            background: #f1f5f9;
+            color: #64748b;
             border-radius: 8px;
+            padding: 13px 15px;
+            font-size: 14px;
+            margin-top: 6px;
+        }
 
+        .register-button {
+            width: 100%;
+            height: 54px;
+            border: none;
+            border-radius: 8px;
             background: #2563eb;
-
             color: white;
-
-            font-size: 16px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 25px;
             transition: 0.2s;
         }
 
-        .register-btn:hover {
+        .register-button:hover {
             background: #1d4ed8;
         }
 
-        /* =========================
-           LOGIN
-        ========================== */
-
         .login-section {
             text-align: center;
-
-            margin-top: 24px;
-
-            padding-top: 20px;
-
             border-top: 1px solid #e5e7eb;
-
-            color: #6b7280;
+            margin-top: 25px;
+            padding-top: 22px;
+            color: #64748b;
+            font-size: 17px;
         }
 
         .login-section a {
             color: #2563eb;
-
+            font-weight: 700;
             text-decoration: none;
-
-            font-weight: bold;
         }
 
         .login-section a:hover {
             text-decoration: underline;
         }
 
-        /* =========================
-           HOME
-        ========================== */
-
-        .back-home {
-            text-align: center;
-
-            margin-top: 16px;
+        .alert {
+            border-radius: 8px;
         }
 
-        .back-home a {
-            color: #4b5563;
-
-            text-decoration: none;
-
-            font-size: 14px;
+        .field-help {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 5px;
         }
 
-        .back-home a:hover {
-            color: #2563eb;
-        }
-
-        /* =========================
-           MOBILE
-        ========================== */
-
-        @media (max-width: 600px) {
-
-            .card {
+        @media (max-width: 768px) {
+            .register-container {
+                margin: 20px;
                 padding: 25px 20px;
             }
 
-            .row {
-                grid-template-columns: 1fr;
-                gap: 0;
+            .register-title {
+                font-size: 30px;
             }
-
-            h1 {
-                font-size: 26px;
-            }
-
         }
-
     </style>
-
 </head>
-
 
 <body>
 
+<div class="register-container">
 
-<div class="container">
+    <!-- TITLE -->
+    <h1 class="register-title">
+        Student Registration
+    </h1>
 
-    <div class="card">
+    <p class="register-subtitle">
+        Create your Campus Placement System account
+    </p>
 
 
-        <!-- =========================
-             HEADER
-        ========================== -->
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div
+                    class="alert
+                    {% if category == 'success' %}
+                        alert-success
+                    {% else %}
+                        alert-danger
+                    {% endif %}"
+                    role="alert"
+                >
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
-        <div class="header">
 
-            <div class="icon">
-                🎓
+    <!-- REGISTRATION FORM -->
+    <form
+        method="POST"
+        action="{{ url_for('student_register') }}"
+    >
+
+        <!-- FULL NAME -->
+        <div class="mb-3">
+            <label class="form-label">
+                Full Name
+            </label>
+
+            <input
+                type="text"
+                name="name"
+                class="form-control"
+                placeholder="Enter your full name"
+                required
+                value="{{ request.form.get('name', '') }}"
+            >
+        </div>
+
+
+        <!-- REGISTER NUMBER -->
+        <div class="mb-3">
+            <label class="form-label">
+                Register Number
+            </label>
+
+            <div class="register-info">
+                <strong>Will be generated automatically</strong>
             </div>
 
-            <h1>
-                Student Registration
-            </h1>
+            <div class="field-help">
+                Your Register Number will be automatically generated
+                after you create your account.
+                Example: <strong>STU0001</strong>
+            </div>
+        </div>
 
-            <p class="subtitle">
-                Create your Campus Placement System account
-            </p>
+
+        <!-- EMAIL + PHONE -->
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+                <label class="form-label">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="example@gmail.com"
+                    required
+                    value="{{ request.form.get('email', '') }}"
+                >
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+                <label class="form-label">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    name="phone"
+                    class="form-control"
+                    placeholder="Enter phone number"
+                    maxlength="10"
+                    required
+                    value="{{ request.form.get('phone', '') }}"
+                >
+
+            </div>
 
         </div>
 
 
-        <!-- =========================
-             FLASH MESSAGES
-        ========================== -->
+        <!-- DEPARTMENT + YEAR -->
+        <div class="row">
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
+            <div class="col-md-6 mb-3">
 
-            {% if messages %}
-
-                {% for category, message in messages %}
-
-                    <div class="flash {{ category }}">
-                        {{ message }}
-                    </div>
-
-                {% endfor %}
-
-            {% endif %}
-
-        {% endwith %}
-
-
-        <!-- =========================
-             REGISTRATION FORM
-        ========================== -->
-
-        <form
-            method="POST"
-            action="{{ url_for('student_register') }}"
-        >
-
-
-            <!-- =========================
-                 FULL NAME
-            ========================== -->
-
-            <div class="form-group">
-
-                <label for="name">
-                    Full Name
+                <label class="form-label">
+                    Department
                 </label>
 
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="Enter your full name"
-                    autocomplete="name"
+                <select
+                    name="department"
+                    class="form-select"
+                    required
+                >
+                    <option value="">
+                        Select Department
+                    </option>
+
+                    <option value="CSE"
+                        {% if request.form.get('department') == 'CSE' %}
+                            selected
+                        {% endif %}
+                    >
+                        CSE
+                    </option>
+
+                    <option value="IT"
+                        {% if request.form.get('department') == 'IT' %}
+                            selected
+                        {% endif %}
+                    >
+                        IT
+                    </option>
+
+                    <option value="ECE"
+                        {% if request.form.get('department') == 'ECE' %}
+                            selected
+                        {% endif %}
+                    >
+                        ECE
+                    </option>
+
+                    <option value="EEE"
+                        {% if request.form.get('department') == 'EEE' %}
+                            selected
+                        {% endif %}
+                    >
+                        EEE
+                    </option>
+
+                    <option value="MECH"
+                        {% if request.form.get('department') == 'MECH' %}
+                            selected
+                        {% endif %}
+                    >
+                        Mechanical
+                    </option>
+
+                    <option value="CIVIL"
+                        {% if request.form.get('department') == 'CIVIL' %}
+                            selected
+                        {% endif %}
+                    >
+                        Civil
+                    </option>
+
+                    <option value="AI&DS"
+                        {% if request.form.get('department') == 'AI&DS' %}
+                            selected
+                        {% endif %}
+                    >
+                        AI & DS
+                    </option>
+
+                    <option value="AIML"
+                        {% if request.form.get('department') == 'AIML' %}
+                            selected
+                        {% endif %}
+                    >
+                        AI & ML
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+                <label class="form-label">
+                    Year
+                </label>
+
+                <select
+                    name="year"
+                    class="form-select"
                     required
                 >
 
-            </div>
+                    <option value="">
+                        Select Year
+                    </option>
 
-
-            <!-- =========================
-                 AUTOMATIC REGISTER NUMBER
-            ========================== -->
-
-            <div class="form-group">
-
-                <label for="register_display">
-                    Register Number
-                </label>
-
-                <input
-                    type="text"
-                    id="register_display"
-                    class="auto-register"
-                    value="Will be generated automatically"
-                    readonly
-                >
-
-                <div class="register-info">
-
-                    Your Register Number will be automatically
-                    generated after you create your account.
-
-                    Example:
-                    <strong>STU0001</strong>
-
-                </div>
-
-            </div>
-
-
-            <!-- =========================
-                 EMAIL + PHONE
-            ========================== -->
-
-            <div class="row">
-
-
-                <div class="form-group">
-
-                    <label for="email">
-                        Email Address
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        placeholder="example@gmail.com"
-                        autocomplete="email"
-                        required
+                    <option value="1"
+                        {% if request.form.get('year') == '1' %}
+                            selected
+                        {% endif %}
                     >
+                        1st Year
+                    </option>
 
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="phone">
-                        Phone Number
-                    </label>
-
-                    <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        placeholder="Enter phone number"
-                        autocomplete="tel"
-                        required
+                    <option value="2"
+                        {% if request.form.get('year') == '2' %}
+                            selected
+                        {% endif %}
                     >
+                        2nd Year
+                    </option>
 
-                </div>
+                    <option value="3"
+                        {% if request.form.get('year') == '3' %}
+                            selected
+                        {% endif %}
+                    >
+                        3rd Year
+                    </option>
 
+                    <option value="4"
+                        {% if request.form.get('year') == '4' %}
+                            selected
+                        {% endif %}
+                    >
+                        4th Year
+                    </option>
+
+                </select>
 
             </div>
 
-
-            <!-- =========================
-                 DEPARTMENT + YEAR
-            ========================== -->
-
-            <div class="row">
+        </div>
 
 
-                <div class="form-group">
+        <!-- CGPA -->
+        <div class="mb-3">
 
-                    <label for="department">
-                        Department
-                    </label>
+            <label class="form-label">
+                CGPA
+            </label>
 
-                    <select
-                        id="department"
-                        name="department"
-                        required
-                    >
-
-                        <option value="">
-                            Select Department
-                        </option>
-
-                        <option value="BCA">
-                            BCA
-                        </option>
-
-                        <option value="MCA">
-                            MCA
-                        </option>
-
-                        <option value="B.Sc Computer Science">
-                            B.Sc Computer Science
-                        </option>
-
-                        <option value="B.Sc IT">
-                            B.Sc IT
-                        </option>
-
-                        <option value="B.Tech CSE">
-                            B.Tech CSE
-                        </option>
-
-                        <option value="B.Tech IT">
-                            B.Tech IT
-                        </option>
-
-                        <option value="Computer Application">
-                            Computer Application
-                        </option>
-
-                        <option value="Other">
-                            Other
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label for="year">
-                        Year
-                    </label>
-
-                    <select
-                        id="year"
-                        name="year"
-                        required
-                    >
-
-                        <option value="">
-                            Select Year
-                        </option>
-
-                        <option value="1st Year">
-                            1st Year
-                        </option>
-
-                        <option value="2nd Year">
-                            2nd Year
-                        </option>
-
-                        <option value="3rd Year">
-                            3rd Year
-                        </option>
-
-                        <option value="4th Year">
-                            4th Year
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-            </div>
-
-
-            <!-- =========================
-                 PASSWORD
-            ========================== -->
-
-            <div class="form-group">
-
-                <label for="password">
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Create a password"
-                    autocomplete="new-password"
-                    minlength="4"
-                    required
-                >
-
-                <div class="password-note">
-
-                    Password must contain at least 4 characters.
-
-                </div>
-
-            </div>
-
-
-            <!-- =========================
-                 CREATE ACCOUNT
-            ========================== -->
-
-            <button
-                type="submit"
-                class="register-btn"
+            <input
+                type="number"
+                name="cgpa"
+                class="form-control"
+                placeholder="Enter your CGPA"
+                step="0.01"
+                min="0"
+                max="10"
+                required
+                value="{{ request.form.get('cgpa', '') }}"
             >
 
-                🎓 Create Account
-
-            </button>
-
-
-        </form>
-
-
-        <!-- =========================
-             LOGIN SECTION
-        ========================== -->
-
-        <div class="login-section">
-
-            Already have an account?
-
-            <a href="{{ url_for('student_login') }}">
-
-                Login Here
-
-            </a>
+            <div class="field-help">
+                Enter your current CGPA between 0 and 10.
+                Example: <strong>8.50</strong>
+            </div>
 
         </div>
 
 
-        <!-- =========================
-             HOME
-        ========================== -->
+        <!-- PASSWORD -->
+        <div class="mb-3">
 
-        <div class="back-home">
+            <label class="form-label">
+                Password
+            </label>
 
-            <a href="{{ url_for('home') }}">
+            <input
+                type="password"
+                name="password"
+                class="form-control"
+                placeholder="Create a password"
+                minlength="4"
+                required
+            >
 
-                ← Back to Home
-
-            </a>
+            <div class="field-help">
+                Password must contain at least 4 characters.
+            </div>
 
         </div>
 
+
+        <!-- CREATE ACCOUNT -->
+        <button
+            type="submit"
+            class="register-button"
+        >
+            🎓 Create Account
+        </button>
+
+    </form>
+
+
+    <!-- LOGIN -->
+    <div class="login-section">
+
+        Already have an account?
+
+        <a href="{{ url_for('student_login') }}">
+            Login Here
+        </a>
 
     </div>
 
 </div>
 
 
-</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
+</body>
 </html>
